@@ -1,0 +1,383 @@
+# ============================================================================
+# AI 市场监控系统 - 关键词配置文件
+# ============================================================================
+# 这个文件定义了所有监控的关键词
+# 支持 YAML 格式，可以随时修改和重新加载
+# ============================================================================
+
+# 痛点雷达监控词 (按产品分类)
+# 用于发现市场机会和用户痛点
+pain_radar:
+  # ChatGPT 相关
+  chatgpt:
+    - "can't"
+    - "doesn't work"
+    - "error"
+    - "failed"
+    - "slow"
+    - "expensive"
+    - "confusing"
+    - "limitation"
+    - "rate limit"
+    - "context window"
+    - "hallucination"
+    - "quality drop"
+    - "token limit"
+  
+  # Claude 相关
+  claude:
+    - "can't"
+    - "doesn't support"
+    - "bug"
+    - "api down"
+    - "rate limit"
+    - "context window"
+    - "expensive"
+    - "slow"
+    - "error"
+    - "failed"
+    - "limitation"
+  
+  # DeepSeek 相关
+  deepseek:
+    - "slow"
+    - "error"
+    - "hallucination"
+    - "can't"
+    - "doesn't work"
+    - "quality issue"
+    - "failed"
+    - "bug"
+    - "limitation"
+  
+  # Cursor 相关
+  cursor:
+    - "bug"
+    - "crash"
+    - "doesn't work"
+    - "slow"
+    - "indexing fail"
+    - "completion wrong"
+    - "error"
+    - "failed"
+    - "limitation"
+    - "expensive"
+  
+  # Midjourney 相关
+  midjourney:
+    - "hands weird"
+    - "broken"
+    - "ugly"
+    - "consistency"
+    - "text fail"
+    - "quality drop"
+    - "error"
+    - "failed"
+    - "limitation"
+  
+  # Sora 相关
+  sora:
+    - "physics fail"
+    - "movement unnatural"
+    - "face melting"
+    - "flicker"
+    - "artifact"
+    - "quality"
+    - "error"
+    - "limitation"
+  
+  # 通用 AI 工具
+  ai_tools:
+    - "doesn't work"
+    - "error"
+    - "slow"
+    - "expensive"
+    - "limitation"
+    - "quality issue"
+    - "bug"
+    - "failed"
+    - "can't"
+
+# 机会猎手监控词 (GitHub)
+# 用于发现新的开源项目和技术趋势
+opportunity_hunter:
+  github:
+    # AI Agent 框架
+    - "AI agent framework"
+    - "LLM agent"
+    - "autonomous agent"
+    - "agent orchestration"
+    - "multi-agent"
+    
+    # RAG 系统
+    - "RAG pipeline"
+    - "retrieval augmented"
+    - "vector database"
+    - "semantic search"
+    - "knowledge base"
+    
+    # 提示工程
+    - "prompt engineering"
+    - "prompt optimization"
+    - "prompt template"
+    - "few-shot learning"
+    
+    # 自动化
+    - "workflow automation"
+    - "task automation"
+    - "process automation"
+    - "RPA"
+    
+    # 新工具
+    - "LLM framework"
+    - "AI framework"
+    - "generative AI"
+    - "foundation model"
+    
+    # 浏览器自动化
+    - "browser automation"
+    - "browser use"
+    - "web automation"
+    - "selenium"
+    
+    # 数据处理
+    - "data pipeline"
+    - "data processing"
+    - "ETL"
+    - "data extraction"
+  
+  # Hacker News 关键词
+  hackernews:
+    # 融资相关
+    - "funding"
+    - "series"
+    - "raised"
+    - "investment"
+    - "venture"
+    - "seed round"
+    
+    # 创业相关
+    - "startup"
+    - "founded"
+    - "launch"
+    - "YCombinator"
+    - "Y Combinator"
+    
+    # 技术突破
+    - "breakthrough"
+    - "SOTA"
+    - "new"
+    - "release"
+    - "announcement"
+    - "launch"
+    
+    # 开源相关
+    - "open source"
+    - "github"
+    - "repository"
+    - "project"
+  
+  # Product Hunt 关键词
+  producthunt:
+    - "AI"
+    - "machine learning"
+    - "automation"
+    - "productivity"
+    - "tool"
+    - "app"
+    - "platform"
+    - "service"
+  
+  # Reddit 关键词
+  reddit:
+    - "looking for"
+    - "need"
+    - "help with"
+    - "anyone know"
+    - "how to"
+    - "problem with"
+    - "issue with"
+    - "bug"
+    - "feature request"
+    - "alternative to"
+
+# Hugging Face 论文监控词
+# 用于发现最新的 AI 研究
+research:
+  huggingface:
+    # Agent 相关
+    - "Agent"
+    - "autonomous"
+    - "reasoning"
+    - "planning"
+    
+    # 浏览器相关
+    - "Browser Use"
+    - "web navigation"
+    - "web automation"
+    
+    # 优化相关
+    - "Optimization"
+    - "efficient"
+    - "fast"
+    - "lightweight"
+    
+    # 新模型
+    - "Model"
+    - "LLM"
+    - "foundation model"
+    - "language model"
+    
+    # 应用
+    - "Application"
+    - "system"
+    - "framework"
+
+# Y Combinator 监控词
+# 用于发现创业趋势
+startup:
+  ycombinator:
+    - "AI"
+    - "machine learning"
+    - "automation"
+    - "productivity"
+    - "data"
+    - "analytics"
+    - "platform"
+    - "tool"
+    - "infrastructure"
+
+# Google Trends 监控词
+# 用于发现热门搜索趋势
+trends:
+  keywords:
+    - "AI"
+    - "ChatGPT"
+    - "machine learning"
+    - "deep learning"
+    - "automation"
+    - "productivity"
+    - "startup"
+    - "technology"
+
+# ============================================================================
+# 高级配置
+# ============================================================================
+
+# 排除词 (包含这些词的内容将被过滤)
+exclude_keywords:
+  - "spam"
+  - "scam"
+  - "fake"
+  - "clickbait"
+  - "advertisement"
+  - "adult"
+  - "nsfw"
+
+# 优先级配置 (高优先级的关键词会被优先处理)
+priority_keywords:
+  high:
+    - "funding"
+    - "breakthrough"
+    - "launch"
+    - "Series A"
+    - "Series B"
+  
+  medium:
+    - "bug"
+    - "error"
+    - "feature"
+    - "update"
+  
+  low:
+    - "question"
+    - "discussion"
+    - "opinion"
+
+# ============================================================================
+# 平台特定配置
+# ============================================================================
+
+platforms:
+  twitter:
+    # Twitter 特定的关键词组合
+    languages:
+      - "en"
+    
+    # 最小转发数
+    min_retweets: 5
+    
+    # 最小点赞数
+    min_likes: 10
+  
+  github:
+    # GitHub 特定配置
+    min_stars: 300
+    min_forks: 10
+    days_since_update: 90
+    languages:
+      - "Python"
+      - "TypeScript"
+      - "JavaScript"
+  
+  reddit:
+    # Reddit 特定配置
+    min_score: 10
+    min_comments: 5
+    subreddits:
+      - "LocalLLaMA"
+      - "OpenAI"
+      - "Claude_AI"
+      - "Cursor"
+      - "MachineLearning"
+      - "LanguageModels"
+      - "learnprogramming"
+      - "webdev"
+  
+  producthunt:
+    # Product Hunt 特定配置
+    min_upvotes: 50
+    categories:
+      - "Artificial Intelligence"
+      - "Productivity"
+      - "Developer Tools"
+      - "Automation"
+  
+  hackernews:
+    # Hacker News 特定配置
+    min_score: 20
+    min_comments: 5
+
+# ============================================================================
+# 时间配置
+# ============================================================================
+
+timing:
+  # 监控间隔 (秒)
+  check_interval: 3600  # 1小时
+  
+  # 数据保留期 (天)
+  retention_days: 90
+  
+  # 去重时间窗口 (小时)
+  dedup_window: 24
+
+# ============================================================================
+# 输出配置
+# ============================================================================
+
+output:
+  # 最多返回多少条结果
+  max_results: 100
+  
+  # 是否按优先级排序
+  sort_by_priority: true
+  
+  # 是否按时间排序
+  sort_by_time: true
+  
+  # 报告格式
+  formats:
+    - "json"
+    - "markdown"
+    - "docx"

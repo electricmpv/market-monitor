@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # 主应用服务
+  market-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: market-monitor
+    restart: always
+    environment:
+      # API 密钥
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - PUSHPLUS_TOKEN=${PUSHPLUS_TOKEN}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN:-}
+      
+      # 代理设置 (可选)
+      - PROXY_HOST=${PROXY_HOST:-}
+      - PROXY_PORT=${PROXY_PORT:-0}
+      
+      # 日志级别
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      
+      # 时区
+      - TZ=America/Los_Angeles
+    
+    volumes:
+      # 挂载数据目录（持久化）
+      - ./my_market_brain:/app/my_market_brain
+      - ./logs:/app/logs
+      - ./reports:/app/reports
+      - ./config:/app/config
+    
+    ports:
+      # 可选：如果需要 API 端口
+      - "8000:8000"
+    
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import sys; sys.exit(0)"]
+      interval: 300s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    
+    networks:
+      - market-monitor-net
+    
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  # 可选：Chroma 向量数据库 (如果需要独立部署)
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chroma-db
+    restart: always
+    environment:
+      - IS_PERSISTENT=TRUE
+      - CHROMA_DB_IMPL=duckdb+parquet
+      - PERSIST_DIRECTORY=/chroma/data
+    
+    volumes:
+      - chroma-data:/chroma/data
+    
+    ports:
+      - "8001:8000"
+    
+    networks:
+      - market-monitor-net
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  market-monitor-net:
+    driver: bridge
+
+volumes:
+  chroma-data:
+    driver: local
