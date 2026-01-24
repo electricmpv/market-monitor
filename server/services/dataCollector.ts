@@ -441,6 +441,15 @@ export async function fetchTwitter(): Promise<FetchResult> {
         
         if (!userResponse.ok) {
           console.warn(`[Twitter] Failed to get user ID for @${username}: ${userResponse.status}`);
+          
+          // Cookie expired or invalid
+          if (userResponse.status === 401 || userResponse.status === 403) {
+            console.error('[Twitter] Cookies expired or invalid. Please update in Settings.');
+            const { updateDataSourceSync } = await import('../db');
+            await updateDataSourceSync('twitter', 0, 'Cookies expired - please update in Settings');
+            throw new Error('Twitter cookies expired');
+          }
+          
           if (userResponse.status === 429) {
             console.log('[Twitter] Rate limit hit, waiting 60s...');
             await sleep(60000);
@@ -510,6 +519,15 @@ export async function fetchTwitter(): Promise<FetchResult> {
         
         if (!response.ok) {
           console.warn(`[Twitter] Failed to fetch @${username}: ${response.status}`);
+          
+          // Cookie expired or invalid
+          if (response.status === 401 || response.status === 403) {
+            console.error('[Twitter] Cookies expired or invalid. Please update in Settings.');
+            const { updateDataSourceSync } = await import('../db');
+            await updateDataSourceSync('twitter', 0, 'Cookies expired - please update in Settings');
+            throw new Error('Twitter cookies expired');
+          }
+          
           // Rate limit hit, wait longer
           if (response.status === 429) {
             console.log('[Twitter] Rate limit hit, waiting 60s...');

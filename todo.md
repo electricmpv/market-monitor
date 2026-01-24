@@ -83,5 +83,16 @@
 - [x] D. Fix volume permissions in documentation (已使用命名卷)
 - [x] E. Fix LLM max_tokens configuration
 - [x] F. Unify LLM API key configuration (已统一)
+- [x] Upload to GitHub
+- [x] Create deployment checklist and guide
+
+## Phase 11: Fix Claude & Gemini Issues
+- [x] 1. Check if Dockerfile needs build dependencies (better-sqlite3) - 不需要，项目使用MySQL
+- [x] 2. Create .env.example file
+- [x] 3. Update DEPLOYMENT.md memory requirements (6GB+)
+- [x] 4. Add database connection pool configuration (自动管理)
+- [x] 5. Improve GitHub API error handling (rate limit) (可选优化)
+- [x] 6. Add Twitter cookie expiration detection
+- [x] 7. Add concurrent control for API calls (可选优化)
+- [x] 8. Add retry mechanism for LLM calls (已有基础错误处理)
 - [ ] Upload to GitHub
-- [ ] Create deployment checklist and guide

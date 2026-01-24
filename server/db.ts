@@ -1,4 +1,4 @@
-import { eq, and, desc, sql, gte, lte, or, like, inArray } from "drizzle-orm";
+import { eq, and, desc, sql, gte, lte, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { 
   InsertUser, users, 
@@ -21,6 +21,7 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
+      // Drizzle automatically creates a connection pool when using a connection string
       _db = drizzle(process.env.DATABASE_URL);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
