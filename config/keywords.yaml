@@ -1,0 +1,336 @@
+# =============================================================================
+# AI Market Hunter v3.0 - Keywords Configuration
+# =============================================================================
+# This file contains all monitoring keywords organized by radar type
+# You can add, modify, or remove keywords as needed
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Track 3: 装修视觉质检 (Construction Visual QC)
+# -----------------------------------------------------------------------------
+track3_pain_hunter:
+  - keyword: "finish quality failed inspection"
+    category: construction_defects
+  - keyword: "contractor won't fix defects"
+    category: construction_defects
+  - keyword: "rework costs more than original"
+    category: construction_defects
+  - keyword: "how to document construction defects"
+    category: construction_defects
+  - keyword: "inspection takes too long"
+    category: efficiency
+  - keyword: "manual quality control is slow"
+    category: efficiency
+  - keyword: "checking every room is tedious"
+    category: efficiency
+  - keyword: "pre-delivery inspection nightmare"
+    category: efficiency
+  - keyword: "dispute with contractor over quality"
+    category: disputes
+  - keyword: "insurance claim denied for photo proof"
+    category: disputes
+  - keyword: "how to prove workmanship defects"
+    category: disputes
+  - keyword: "standardized inspection checklist"
+    category: standardization
+
+track3_tech_scout:
+  - keyword: "crack detection computer vision"
+    category: vision_ai
+  - keyword: "surface defect detection AI"
+    category: vision_ai
+  - keyword: "real-time visual inspection"
+    category: vision_ai
+  - keyword: "image-based quality assessment"
+    category: vision_ai
+  - keyword: "edge AI inference"
+    category: edge_ai
+  - keyword: "lightweight vision model"
+    category: edge_ai
+  - keyword: "vision model optimization"
+    category: edge_ai
+  - keyword: "multimodal quality control"
+    category: multimodal
+  - keyword: "audio-visual defect detection"
+    category: multimodal
+  - keyword: "construction AI benchmark"
+    category: industry
+
+track3_funding:
+  - keyword: "construction tech startup funding"
+    category: funding
+  - keyword: "building inspection AI raise"
+    category: funding
+  - keyword: "defect detection startup"
+    category: funding
+  - keyword: "home renovation software funding"
+    category: funding
+  - keyword: "quality assurance platform raise"
+    category: funding
+  - keyword: "YC construction"
+    category: yc
+  - keyword: "YC quality control"
+    category: yc
+  - keyword: "facility management AI funding"
+    category: funding
+
+# -----------------------------------------------------------------------------
+# Track 1: Web3 KOL CRM
+# -----------------------------------------------------------------------------
+track1_pain_hunter:
+  - keyword: "finding real crypto influencers"
+    category: web3_kol
+  - keyword: "fake followers on crypto twitter"
+    category: web3_kol
+  - keyword: "influencer engagement too low"
+    category: web3_kol
+  - keyword: "how to vet crypto KOL authenticity"
+    category: web3_kol
+  - keyword: "crypto marketing budget wasted"
+    category: web3_cost
+  - keyword: "influencer collab costs too much"
+    category: web3_cost
+  - keyword: "small project can't afford marketing"
+    category: web3_cost
+  - keyword: "how to measure influencer ROI"
+    category: web3_measurement
+  - keyword: "tracking marketing attribution in crypto"
+    category: web3_measurement
+  - keyword: "where to find micro influencers web3"
+    category: web3_discovery
+
+track1_tech_scout:
+  - keyword: "social media analytics platform"
+    category: analytics
+  - keyword: "twitter API analysis"
+    category: analytics
+  - keyword: "real-time social listening"
+    category: analytics
+  - keyword: "influencer scoring algorithm"
+    category: scoring
+  - keyword: "authenticity detection for social media"
+    category: scoring
+  - keyword: "graph database for social networks"
+    category: graph
+  - keyword: "network effect measurement"
+    category: graph
+  - keyword: "GDPR compliant social data"
+    category: compliance
+
+track1_funding:
+  - keyword: "crypto analytics startup funding"
+    category: funding
+  - keyword: "Web3 intelligence platform raise"
+    category: funding
+  - keyword: "blockchain intelligence startup series"
+    category: funding
+  - keyword: "influencer management platform funding"
+    category: funding
+  - keyword: "creator economy platform raise"
+    category: funding
+  - keyword: "crypto marketing automation startup"
+    category: funding
+  - keyword: "Web3 growth tool series"
+    category: funding
+  - keyword: "YC crypto"
+    category: yc
+  - keyword: "a16z portfolio Web3"
+    category: vc
+  - keyword: "sequoia crypto investments"
+    category: vc
+
+# -----------------------------------------------------------------------------
+# Track 2: Web3 退场风险预警 (Exit Risk Warning)
+# -----------------------------------------------------------------------------
+track2_pain_hunter:
+  - keyword: "how to detect rug pull early"
+    category: risk_detection
+  - keyword: "scam detection crypto"
+    category: risk_detection
+  - keyword: "exit scam warning signs"
+    category: risk_detection
+  - keyword: "token health check"
+    category: health_monitoring
+  - keyword: "development activity tracking"
+    category: health_monitoring
+  - keyword: "holder concentration risk"
+    category: health_monitoring
+  - keyword: "community sentiment analysis"
+    category: sentiment
+  - keyword: "whale movement monitoring"
+    category: sentiment
+  - keyword: "liquidity withdrawal risk"
+    category: exchange
+
+track2_tech_scout:
+  - keyword: "on-chain metrics analysis"
+    category: onchain
+  - keyword: "token flow analysis"
+    category: onchain
+  - keyword: "smart contract monitoring"
+    category: onchain
+  - keyword: "blockchain data aggregation"
+    category: data
+  - keyword: "real-time chain data API"
+    category: data
+  - keyword: "correlation between social sentiment and on-chain"
+    category: crossdata
+  - keyword: "multimodal risk scoring"
+    category: crossdata
+  - keyword: "anomaly detection for blockchain"
+    category: ml
+
+track2_funding:
+  - keyword: "token risk assessment startup"
+    category: funding
+  - keyword: "blockchain security platform funding"
+    category: funding
+  - keyword: "crypto intelligence platform raise"
+    category: funding
+  - keyword: "on-chain analytics startup series"
+    category: funding
+  - keyword: "crypto fund management tool funding"
+    category: funding
+  - keyword: "YC blockchain"
+    category: yc
+  - keyword: "a16z crypto infrastructure"
+    category: vc
+
+# -----------------------------------------------------------------------------
+# AI Frontier (Bonus Track)
+# -----------------------------------------------------------------------------
+ai_frontier:
+  - keyword: "vision AI old industry"
+    category: ai_frontier
+  - keyword: "document AI compliance"
+    category: ai_frontier
+  - keyword: "workflow automation for SMB"
+    category: ai_frontier
+  - keyword: "data extraction from unstructured sources"
+    category: ai_frontier
+  - keyword: "voice cloning for business"
+    category: ai_frontier
+  - keyword: "real-time video processing"
+    category: ai_frontier
+  - keyword: "multimodal understanding"
+    category: ai_frontier
+  - keyword: "personalization at scale"
+    category: ai_frontier
+  - keyword: "fine-tuning for specific domain"
+    category: ai_engineering
+  - keyword: "prompt engineering as a service"
+    category: ai_engineering
+  - keyword: "model observability"
+    category: ai_engineering
+  - keyword: "synthetic data generation"
+    category: ai_engineering
+  - keyword: "edge AI offline"
+    category: ai_engineering
+  - keyword: "AI for data quality"
+    category: ai_engineering
+  - keyword: "cost optimization for LLM"
+    category: ai_engineering
+  - keyword: "AI transparency interpretability"
+    category: ai_engineering
+  - keyword: "AI agent framework"
+    category: ai_agent
+  - keyword: "browser automation AI"
+    category: ai_agent
+  - keyword: "RAG retrieval augmented generation"
+    category: ai_agent
+  - keyword: "MCP model context protocol"
+    category: ai_agent
+
+# -----------------------------------------------------------------------------
+# KOLs to Monitor
+# -----------------------------------------------------------------------------
+kols:
+  # Track 3 KOLs
+  - handle: buildots_io
+    platform: twitter
+    name: "Buildots (Construction AI)"
+  - handle: openspace_ai
+    platform: twitter
+    name: "OpenSpace (Construction Progress)"
+  - handle: doxel_com
+    platform: twitter
+    name: "Doxel (AI Construction)"
+  
+  # Track 1 KOLs
+  - handle: dvassallo
+    platform: twitter
+    name: "Daniel Vassallo (Indie Hacker)"
+  - handle: eriktorenberg
+    platform: twitter
+    name: "Erik Torenberg (VC)"
+  - handle: jessepollak
+    platform: twitter
+    name: "Jesse Pollak (Base/Coinbase)"
+  - handle: tarunchitra
+    platform: twitter
+    name: "Tarun Chitra (Variant Fund)"
+  - handle: balajis
+    platform: twitter
+    name: "Balaji Srinivasan (Web3)"
+  
+  # Track 2 KOLs
+  - handle: ArkhamIntel
+    platform: twitter
+    name: "Arkham Intelligence"
+  - handle: CertikCommunity
+    platform: twitter
+    name: "Certik (Security)"
+  
+  # AI Frontier KOLs
+  - handle: andrewng
+    platform: twitter
+    name: "Andrew Ng (AI Pioneer)"
+  - handle: karpathy
+    platform: twitter
+    name: "Andrej Karpathy (Tesla AI)"
+  - handle: emollick
+    platform: twitter
+    name: "Ethan Mollick (Wharton)"
+  - handle: swyx
+    platform: twitter
+    name: "Shawn Wang (Latent Space)"
+  - handle: yoheinakajima
+    platform: twitter
+    name: "Yohei Nakajima (AutoGPT)"
+  - handle: sama
+    platform: twitter
+    name: "Sam Altman (OpenAI)"
+  - handle: patrickc
+    platform: twitter
+    name: "Patrick Collison (Stripe)"
+  - handle: ylecun
+    platform: twitter
+    name: "Yann LeCun (Meta AI)"
+  
+  # GitHub KOLs
+  - handle: langchain-ai
+    platform: github
+    name: "LangChain"
+  - handle: openai
+    platform: github
+    name: "OpenAI"
+  - handle: huggingface
+    platform: github
+    name: "Hugging Face"
+  
+  # Reddit communities
+  - handle: LocalLLaMA
+    platform: reddit
+    name: "r/LocalLLaMA"
+  - handle: MachineLearning
+    platform: reddit
+    name: "r/MachineLearning"
+  - handle: artificial
+    platform: reddit
+    name: "r/artificial"
+  - handle: CryptoCurrency
+    platform: reddit
+    name: "r/CryptoCurrency"
+  - handle: HomeImprovement
+    platform: reddit
+    name: "r/HomeImprovement"

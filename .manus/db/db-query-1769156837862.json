@@ -1,0 +1,9 @@
+{
+  "query": "DROP TABLE IF EXISTS data_sources, keywords, kols, learning_weights, push_history, raw_items, snapshots, system_config, topics, user_actions, weekly_recommendations;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2V1kTU8mGCZBCtv.root --database WhrEENegRNs42rbjApV5Nq --execute DROP TABLE IF EXISTS data_sources, keywords, kols, learning_weights, push_history, raw_items, snapshots, system_config, topics, user_actions, weekly_recommendations;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 5040
+}

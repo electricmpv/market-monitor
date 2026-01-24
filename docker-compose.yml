@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  market-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: market-monitor-v3
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - TZ=America/Los_Angeles
+      # Database (use external MySQL/TiDB)
+      - DATABASE_URL=${DATABASE_URL}
+      # AI API Keys (双API Key配置)
+      - GEMINI_API_KEY_SEARCH=${GEMINI_API_KEY_SEARCH}
+      - GEMINI_API_KEY_REPORT=${GEMINI_API_KEY_REPORT}
+      # Push notifications
+      - PUSHPLUS_TOKEN=${PUSHPLUS_TOKEN}
+      # JWT Secret
+      - JWT_SECRET=${JWT_SECRET}
+      # Note: Manus OAuth and Forge API variables are only needed
+      # if you're deploying within the Manus platform.
+      # For standalone deployment, these can be omitted.
+    volumes:
+      # Persist data and logs using named volumes
+      - market-monitor-data:/app/data
+      - market-monitor-logs:/app/logs
+      # External keywords config (optional, read-only)
+      - ./config/keywords.yaml:/app/config/keywords.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - market-monitor-network
+
+networks:
+  market-monitor-network:
+    driver: bridge
+
+volumes:
+  market-monitor-data:
+    driver: local
+  market-monitor-logs:
+    driver: local
