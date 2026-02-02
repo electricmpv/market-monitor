@@ -1,0 +1,29 @@
+{
+  "influencers": [
+    {
+      "name": "Andrew Chen",
+      "twitter_handle": "@andrewchen",
+      "category": "AI/Startup"
+    },
+    {
+      "name": "Simon Willison",
+      "twitter_handle": "@simonw",
+      "category": "AI/Tech"
+    },
+    {
+      "name": "Linus Ekenstam",
+      "twitter_handle": "@LinusEkenstam",
+      "category": "AI/Indie Hacker"
+    },
+    {
+      "name": "Pieter Levels",
+      "twitter_handle": "@levelsio",
+      "category": "Indie Hacker"
+    },
+    {
+      "name": "Sam Altman",
+      "twitter_handle": "@sama",
+      "category": "AI/Startup"
+    }
+  ]
+}

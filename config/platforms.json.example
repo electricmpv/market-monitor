@@ -1,0 +1,9 @@
+{
+  "platforms": [
+    "twitter",
+    "reddit",
+    "github",
+    "hackernews",
+    "producthunt"
+  ]
+}

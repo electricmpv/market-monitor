@@ -17,21 +17,22 @@ import sys
 from pathlib import Path
 
 try:
-    from google import genai
     from twikit import Client
     import requests
     import chromadb
     from docx import Document
+    from llm_client import LLMClient
+    from yuque_report_generator import YuqueReportGenerator
+    from telegram_notifier import TelegramNotifier
 except ImportError as e:
     print(f"❌ 依赖库缺失: {e}")
-    print("请运行: pip install google-genai twikit requests chromadb python-docx")
+    print("请运行: pip install -r requirements.txt")
     sys.exit(1)
 
 # ==================== 🛠️ 用户配置区 ====================
 
-# API密钥配置
-GEMINI_KEY = os.getenv('GEMINI_API_KEY', '填入自己的API-key')
-PUSHPLUS_TOKEN = os.getenv('PUSHPLUS_TOKEN', '填入自己的TOKEN')
+# LLM 和服务配置
+LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'deepseek')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', '')
 
 # 网络配置
@@ -94,12 +95,15 @@ print(f"🎯 痛点雷达 v2.0 启动... [时间: {datetime.datetime.now().strft
 
 # 初始化组件
 try:
-    gemini_client = genai.Client(api_key=GEMINI_KEY)
+    llm = LLMClient(provider=LLM_PROVIDER)
+    yuque_gen = YuqueReportGenerator()
+    telegram = TelegramNotifier()
     chroma_client = chromadb.PersistentClient(path=str(DATA_DIR))
     pain_collection = chroma_client.get_or_create_collection(name="pain_points_v2")
     print("✅ 所有组件加载完毕")
 except Exception as e:
     print(f"❌ 初始化失败: {e}")
+    print(f"提示: 请检查 .env 文件中的配置")
     sys.exit(1)
 
 current_session_pains = []
@@ -249,7 +253,7 @@ def scan_hacker_news():
 def analyze_opportunities(raw_data):
     """用AI分析市场机会"""
     print("\n🧠 [3/3] AI 正在分析市场机会...")
-    
+
     prompt = f"""
 # Role: Market Opportunity Analyst
 # Task: 从用户吐槽中提取可商业化的市场机会
@@ -294,41 +298,37 @@ def analyze_opportunities(raw_data):
 - 主要产品: ...
 - 最热话题: ...
 """
-    
-    max_retries = 3
-    for attempt in range(max_retries):
-        try:
-            response = gemini_client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
-            )
-            return response.text
-        except Exception as e:
-            print(f"⚠️ 分析尝试 {attempt+1}/{max_retries} 失败: {e}")
-            if attempt < max_retries - 1:
-                time.sleep(5)
-            else:
-                return "❌ AI分析失败，请检查API密钥"
-    
-    return "❌ AI分析失败"
 
-def deliver_report(content):
+    try:
+        # 使用新的 LLM 客户端
+        analysis = llm.analyze(prompt)
+        return analysis
+    except Exception as e:
+        print(f"❌ LLM分析失败: {e}")
+        return "❌ AI分析失败，请检查API密钥和网络连接"
+
+async def deliver_report(content):
     """交付报告"""
     if content.startswith("❌"):
         print(f"\n🚫 {content}")
         return
-    
+
     today = datetime.date.today().strftime("%Y-%m-%d")
-    filename = f"Market_Opportunities_{today}.docx"
-    
-    # 保存Word文档
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"Market_Opportunities_{timestamp}.docx"
+
+    # 1. 保存本地 Word 文档
     try:
+        # 确保 reports 目录存在
+        reports_dir = Path('./reports')
+        reports_dir.mkdir(exist_ok=True)
+
         doc = Document()
         doc.add_heading(f'🎯 市场机会分析报告 - {today}', 0)
         doc.add_paragraph(f"生成时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         doc.add_paragraph(f"捕获痛点数: {len(current_session_pains)}")
         doc.add_paragraph("=" * 50)
-        
+
         for line in content.split('\n'):
             line = line.strip()
             if not line:
@@ -341,31 +341,50 @@ def deliver_report(content):
                 doc.add_heading(line.replace('### ', ''), level=3)
             else:
                 doc.add_paragraph(line)
-        
-        doc.save(filename)
-        print(f"\n💾 ✅ 报告已生成: {filename}")
+
+        doc.save(reports_dir / filename)
+        print(f"\n💾 ✅ 本地报告已生成: {filename}")
     except Exception as e:
         print(f"❌ Word生成失败: {e}")
-    
-    # 推送微信
-    if PUSHPLUS_TOKEN and PUSHPLUS_TOKEN != '填入自己的TOKEN':
-        try:
-            print("📨 正在推送到微信...")
-            wechat_body = f"# 🎯 市场机会分析 ({today})\n\n{content}"
-            
-            requests.post(
-                'http://www.pushplus.plus/send',
-                json={
-                    "token": PUSHPLUS_TOKEN,
-                    "title": f"【市场机会】{today}",
-                    "content": wechat_body,
-                    "template": "markdown"
-                },
-                timeout=10
-            )
-            print("📨 ✅ 微信推送完成")
-        except Exception as e:
-            print(f"⚠️ 推送失败: {e}")
+
+    # 2. 生成语雀报告
+    yuque_url = "生成失败"
+    try:
+        # 准备数据
+        data = {
+            'platforms_count': 2,  # Twitter + HN
+            'raw_data_count': len(current_session_pains),
+            'quality_opportunities': min(3, len(current_session_pains)),
+            'pain_points_count': len(current_session_pains),
+            'tech_trends_count': 0,
+            'pain_points': [
+                {
+                    'product': p['product'],
+                    'content': p['content'][:100]
+                }
+                for p in current_session_pains[:5]
+            ],
+            'sources': [
+                {
+                    'platform': p['source'],
+                    'url': '#'
+                }
+                for p in current_session_pains[:5]
+            ]
+        }
+
+        yuque_url = yuque_gen.create_report(data)
+        print(f"✅ 语雀报告: {yuque_url}")
+    except Exception as e:
+        print(f"❌ 语雀报告生成失败: {e}")
+
+    # 3. 发送 Telegram 通知
+    try:
+        summary = f"发现 {len(current_session_pains)} 个痛点"
+        await telegram.send_report_notification(summary, yuque_url)
+        print("✅ Telegram 通知已发送")
+    except Exception as e:
+        print(f"❌ Telegram 通知失败: {e}")
 
 # ==================== 主程序 ====================
 
@@ -390,9 +409,9 @@ async def main():
         
         # AI分析
         analysis = analyze_opportunities(raw_pains)
-        
+
         # 交付报告
-        deliver_report(analysis)
+        await deliver_report(analysis)
     else:
         print("🤷 未捕获到新痛点")
     

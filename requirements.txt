@@ -2,8 +2,21 @@
 # AI 市场监控系统 - Python 依赖
 # ============================================================================
 
-# AI & LLM
-google-generativeai>=0.3.0
+# AI & LLM (新方案 - 支持多个提供商)
+openai>=1.0.0              # 用于 OpenAI/Codex/DeepSeek
+anthropic>=0.18.0          # 用于 Claude (可选)
+
+# Web Framework
+fastapi>=0.109.0           # Web API 框架
+uvicorn>=0.27.0            # ASGI 服务器
+python-multipart>=0.0.6    # 文件上传支持
+
+# Authentication
+pyjwt>=2.8.0               # JWT Token 生成/验证
+httpx>=0.26.0              # 异步 HTTP 客户端（用于 GitHub OAuth）
+
+# Notifications
+python-telegram-bot>=20.0
 
 # API & 网络
 requests>=2.31.0
@@ -36,6 +49,10 @@ colorlog>=6.8.0
 
 # 异步处理
 aiohttp>=3.9.0
+
+# Utilities
+tenacity>=8.0.0            # 重试逻辑
+pydantic>=2.0.0            # 数据验证
 
 # 工具类
 python-dateutil>=2.8.0

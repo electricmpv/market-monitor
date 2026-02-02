@@ -1,0 +1,39 @@
+{
+  "keywords": [
+    {
+      "keyword": "can't",
+      "category": "pain",
+      "product": "ChatGPT"
+    },
+    {
+      "keyword": "doesn't work",
+      "category": "pain",
+      "product": "ChatGPT"
+    },
+    {
+      "keyword": "expensive",
+      "category": "pain",
+      "product": "Claude"
+    },
+    {
+      "keyword": "slow",
+      "category": "pain",
+      "product": "DeepSeek"
+    },
+    {
+      "keyword": "AI agent framework",
+      "category": "opportunity",
+      "product": null
+    },
+    {
+      "keyword": "LLM agent",
+      "category": "opportunity",
+      "product": null
+    },
+    {
+      "keyword": "RAG pipeline",
+      "category": "opportunity",
+      "product": null
+    }
+  ]
+}

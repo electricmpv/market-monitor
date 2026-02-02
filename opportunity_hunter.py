@@ -15,19 +15,21 @@ import sys
 from pathlib import Path
 
 try:
-    from google import genai
     import requests
     import chromadb
     from docx import Document
     from docx.shared import Pt, RGBColor
+    from llm_client import LLMClient
+    from yuque_report_generator import YuqueReportGenerator
+    from telegram_notifier import TelegramNotifier
 except ImportError as e:
     print(f"❌ 依赖库缺失: {e}")
+    print("请运行: pip install -r requirements.txt")
     sys.exit(1)
 
 # ==================== 🛠️ 用户配置区 ====================
 
-GEMINI_KEY = os.getenv('GEMINI_API_KEY', '填入自己的API-key')
-PUSHPLUS_TOKEN = os.getenv('PUSHPLUS_TOKEN', '填入自己的TOKEN')
+LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'deepseek')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', '')
 
 YOUR_PORT = int(os.getenv('PROXY_PORT', 19828))
@@ -81,12 +83,15 @@ DATA_DIR.mkdir(exist_ok=True)
 print(f"🔍 机会猎手 v2.0 启动... [时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]")
 
 try:
-    gemini_client = genai.Client(api_key=GEMINI_KEY)
+    llm = LLMClient(provider=LLM_PROVIDER)
+    yuque_gen = YuqueReportGenerator()
+    telegram = TelegramNotifier()
     chroma_client = chromadb.PersistentClient(path=str(DATA_DIR))
     opportunity_collection = chroma_client.get_or_create_collection(name="opportunities_v2")
     print("✅ 所有组件加载完毕")
 except Exception as e:
     print(f"❌ 初始化失败: {e}")
+    print(f"提示: 请检查 .env 文件中的配置")
     sys.exit(1)
 
 current_session_opportunities = []
@@ -299,38 +304,38 @@ def analyze_opportunities_ai(raw_data):
 - 技术方向: ...
 """
     
-    max_retries = 3
-    for attempt in range(max_retries):
-        try:
-            response = gemini_client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
-            )
-            return response.text
-        except Exception as e:
-            print(f"⚠️ 分析尝试 {attempt+1} 失败: {e}")
-            if attempt < max_retries - 1:
-                time.sleep(5)
+    try:
+        # 使用新的 LLM 客户端
+        analysis = llm.analyze(prompt)
+        return analysis
+    except Exception as e:
+        print(f"❌ LLM分析失败: {e}")
+        return "❌ AI分析失败，请检查API密钥和网络连接"
     
     return "❌ AI分析失败"
 
-def deliver_report(content):
+async def deliver_report(content):
     """交付报告"""
     if content.startswith("❌"):
         print(f"\n🚫 {content}")
         return
-    
+
     today = datetime.date.today().strftime("%Y-%m-%d")
-    filename = f"Opportunities_Report_{today}.docx"
-    
-    # 保存Word
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"Opportunities_Report_{timestamp}.docx"
+
+    # 1. 保存本地 Word 文档
     try:
+        # 确保 reports 目录存在
+        reports_dir = Path('./reports')
+        reports_dir.mkdir(exist_ok=True)
+
         doc = Document()
         doc.add_heading(f'🔍 机会发现报告 - {today}', 0)
         doc.add_paragraph(f"生成时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         doc.add_paragraph(f"发现机会数: {len(current_session_opportunities)}")
         doc.add_paragraph("=" * 50)
-        
+
         for line in content.split('\n'):
             line = line.strip()
             if not line:
@@ -343,61 +348,81 @@ def deliver_report(content):
                 doc.add_heading(line.replace('### ', ''), level=3)
             else:
                 doc.add_paragraph(line)
-        
-        doc.save(filename)
-        print(f"\n💾 ✅ 报告已生成: {filename}")
+
+        doc.save(reports_dir / filename)
+        print(f"\n💾 ✅ 本地报告已生成: {filename}")
     except Exception as e:
         print(f"❌ Word生成失败: {e}")
-    
-    # 推送微信
-    if PUSHPLUS_TOKEN and PUSHPLUS_TOKEN != '填入自己的TOKEN':
-        try:
-            print("📨 正在推送到微信...")
-            wechat_body = f"# 🔍 机会发现报告 ({today})\n\n{content}"
-            
-            requests.post(
-                'http://www.pushplus.plus/send',
-                json={
-                    "token": PUSHPLUS_TOKEN,
-                    "title": f"【机会】{today}",
-                    "content": wechat_body,
-                    "template": "markdown"
-                },
-                timeout=10
-            )
-            print("📨 ✅ 微信推送完成")
-        except Exception as e:
-            print(f"⚠️ 推送失败: {e}")
+
+    # 2. 生成语雀报告
+    yuque_url = "生成失败"
+    try:
+        # 准备数据
+        data = {
+            'platforms_count': 2,  # GitHub + HN
+            'raw_data_count': len(current_session_opportunities),
+            'quality_opportunities': min(5, len(current_session_opportunities)),
+            'pain_points_count': 0,
+            'tech_trends_count': len(current_session_opportunities),
+            'tech_trends': [
+                {
+                    'title': o['title'],
+                    'description': o['description'][:100]
+                }
+                for o in current_session_opportunities[:5]
+            ],
+            'sources': [
+                {
+                    'platform': o['source'],
+                    'url': o.get('url', '#')
+                }
+                for o in current_session_opportunities[:5]
+            ]
+        }
+
+        yuque_url = yuque_gen.create_report(data)
+        print(f"✅ 语雀报告: {yuque_url}")
+    except Exception as e:
+        print(f"❌ 语雀报告生成失败: {e}")
+
+    # 3. 发送 Telegram 通知
+    try:
+        summary = f"发现 {len(current_session_opportunities)} 个机会"
+        await telegram.send_report_notification(summary, yuque_url)
+        print("✅ Telegram 通知已发送")
+    except Exception as e:
+        print(f"❌ Telegram 通知失败: {e}")
 
 # ==================== 主程序 ====================
 
-def main():
+async def main():
     print("\n" + "="*60)
     print("🚀 开始机会猎手循环")
     print("="*60)
-    
+
     c1 = hunt_github()
     c2 = hunt_hacker_news()
-    
+
     total = c1 + c2
     print(f"\n📊 本次发现机会数: {total}")
-    
+
     if total > 0:
         raw_opps = "\n".join([
             f"【{o['source']}】{o['title']}: {o['description']}"
             for o in current_session_opportunities
         ])
-        
+
         analysis = analyze_opportunities_ai(raw_opps)
-        deliver_report(analysis)
+        await deliver_report(analysis)
     else:
         print("🤷 未发现新机会")
-    
+
     print("\n✅ 机会猎手循环完成")
 
 if __name__ == "__main__":
+    import asyncio
     try:
-        main()
+        asyncio.run(main())
     except KeyboardInterrupt:
         print("\n⚠️ 用户中断")
     except Exception as e:
