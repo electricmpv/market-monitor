@@ -7,7 +7,9 @@ from datetime import datetime
 
 class YuqueReportGenerator:
     def __init__(self):
-        self.token = os.getenv('YUQUE_TOKEN', 'EmucIYlJro7ic4O4ZS6UujQZm89tXmwor7PwNYmL')
+        self.token = os.getenv('YUQUE_TOKEN')
+        if not self.token:
+            raise ValueError("请设置环境变量 YUQUE_TOKEN！")
         self.base_url = 'https://www.yuque.com/api/v2'
         self.namespace = os.getenv('YUQUE_NAMESPACE', 'diandongmianbao')
         self.repo_slug = os.getenv('YUQUE_REPO_SLUG', 'cg40cd')  # 使用用户指定的知识库

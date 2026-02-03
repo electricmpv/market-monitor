@@ -12,7 +12,9 @@ def push_report_to_yuque(markdown_file_path):
     """推送 Markdown 报告到语雀"""
 
     # 语雀配置
-    token = os.getenv('YUQUE_TOKEN', 'EmucIYlJro7ic4O4ZS6UujQZm89tXmwor7PwNYmL')
+    token = os.getenv('YUQUE_TOKEN')
+    if not token:
+        raise ValueError("请设置环境变量 YUQUE_TOKEN！")
     base_url = 'https://www.yuque.com/api/v2'
     namespace = 'diandongmianbao'
     repo_slug = 'cg40cd'
