@@ -282,8 +282,34 @@ git push origin feature/llm-upgrade
 
 ## 🌐 远程仓库
 
-- **GitHub**: https://github.com/electricmpv/market-monitor.git
-- **Gitea** (本地): http://localhost:3000
+### GitHub（云端备份）
+
+```bash
+# 推送到 GitHub（需要配置认证）
+# 方式1：SSH Key（推荐）
+git remote set-url origin git@github.com:electricmpv/market-monitor.git
+git push origin feature/llm-upgrade
+
+# 方式2：Personal Access Token
+# 1. 访问 https://github.com/settings/tokens
+# 2. 生成 token（repo权限）
+# 3. 推送时使用：
+git push https://YOUR_TOKEN@github.com/electricmpv/market-monitor.git feature/llm-upgrade
+```
+
+### Gitea（本地备份）
+
+```bash
+# 推送到本地 Gitea
+git push gitea feature/llm-upgrade
+
+# 查看 Gitea 仓库
+# http://localhost:3000/git01/market-monitor
+```
+
+**重要**：建议同时推送到 GitHub 和 Gitea：
+- GitHub：云端备份，防止服务器故障
+- Gitea：本地快速访问
 
 ## 📄 许可证
 
