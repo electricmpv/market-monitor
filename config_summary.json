@@ -1,0 +1,19 @@
+{
+  "platforms": [
+    "twitter",
+    "reddit",
+    "hackernews",
+    "vc_channels",
+    "producthunt",
+    "github",
+    "indiehackers",
+    "tech_blogs"
+  ],
+  "total_influencers": 53,
+  "high_priority_influencers": 29,
+  "twitter_handles_count": 63,
+  "reddit_subreddits_count": 18,
+  "pain_signal_keywords_count": 35,
+  "opportunity_signal_keywords_count": 38,
+  "noise_filter_keywords_count": 25
+}

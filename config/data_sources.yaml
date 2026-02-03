@@ -1,0 +1,458 @@
+# ============================================================================
+# AI 市场监控系统 - 数据源配置文件
+# ============================================================================
+# 定义所有数据采集平台的详细配置
+# ============================================================================
+
+# ==================== Twitter/X 数据源 ====================
+twitter:
+  enabled: true
+
+  # 监控的关键词（按类别组织）
+  keywords:
+    # AI 产品痛点
+    ai_pain_points:
+      - "ChatGPT expensive"
+      - "ChatGPT slow"
+      - "ChatGPT hallucination"
+      - "ChatGPT context limit"
+      - "Claude expensive"
+      - "Claude API down"
+      - "Claude slow"
+      - "Gemini quality"
+      - "DeepSeek error"
+      - "Cursor bug"
+      - "Cursor expensive"
+      - "Midjourney quality"
+      - "AI tool limitation"
+
+    # 创业和商业机会
+    startup_opportunities:
+      - "need AI tool"
+      - "looking for alternative"
+      - "better than ChatGPT"
+      - "AI side project"
+      - "AI SaaS idea"
+      - "solo founder"
+      - "indie hacker AI"
+
+    # 技术趋势
+    tech_trends:
+      - "new AI model"
+      - "AI agent framework"
+      - "RAG pipeline"
+      - "LLM breakthrough"
+      - "open source AI"
+      - "AI API"
+
+    # 融资和投资
+    funding:
+      - "raised funding"
+      - "seed round"
+      - "Series A"
+      - "AI startup funding"
+      - "YC batch"
+
+  # 过滤条件
+  filters:
+    min_followers: 100        # 最小粉丝数
+    min_likes: 5              # 最小点赞数
+    min_retweets: 2           # 最小转发数
+    languages:
+      - "en"                  # 英语
+      - "zh"                  # 中文
+
+  # 排除的关键词（垃圾过滤）
+  exclude_keywords:
+    - "crypto scam"
+    - "buy now"
+    - "click here"
+    - "limited time"
+    - "make money fast"
+
+# ==================== Reddit 数据源 ====================
+reddit:
+  enabled: true
+
+  # 监控的 subreddits（按优先级排序）
+  subreddits:
+    # AI/ML 核心社区
+    ai_ml:
+      - name: "LocalLLaMA"
+        min_score: 50
+        min_comments: 10
+        priority: "high"
+      - name: "OpenAI"
+        min_score: 30
+        min_comments: 5
+        priority: "high"
+      - name: "Claude_AI"
+        min_score: 20
+        min_comments: 5
+        priority: "high"
+      - name: "MachineLearning"
+        min_score: 100
+        min_comments: 20
+        priority: "medium"
+      - name: "artificial"
+        min_score: 50
+        min_comments: 10
+        priority: "medium"
+      - name: "LanguageModels"
+        min_score: 30
+        min_comments: 5
+        priority: "high"
+
+    # 开发者工具
+    developer_tools:
+      - name: "Cursor"
+        min_score: 10
+        min_comments: 3
+        priority: "high"
+      - name: "vscode"
+        min_score: 50
+        min_comments: 10
+        priority: "medium"
+      - name: "programming"
+        min_score: 100
+        min_comments: 15
+        priority: "low"
+      - name: "learnprogramming"
+        min_score: 50
+        min_comments: 10
+        priority: "low"
+      - name: "webdev"
+        min_score: 50
+        min_comments: 10
+        priority: "medium"
+
+    # 创业和商业
+    startup_business:
+      - name: "Entrepreneur"
+        min_score: 100
+        min_comments: 15
+        priority: "high"
+      - name: "SideProject"
+        min_score: 30
+        min_comments: 5
+        priority: "high"
+      - name: "startups"
+        min_score: 50
+        min_comments: 10
+        priority: "medium"
+      - name: "SaaS"
+        min_score: 30
+        min_comments: 5
+        priority: "high"
+      - name: "IndieBiz"
+        min_score: 20
+        min_comments: 5
+        priority: "high"
+      - name: "Bootstrapped"
+        min_score: 20
+        min_comments: 5
+        priority: "medium"
+      - name: "EntrepreneurRideAlong"
+        min_score: 30
+        min_comments: 5
+        priority: "medium"
+
+  # 关键词搜索
+  search_keywords:
+    - "pain point"
+    - "frustrated with"
+    - "looking for alternative"
+    - "need help with"
+    - "anyone know"
+    - "recommend"
+    - "better than"
+
+  # 时间范围
+  time_filter: "week"  # day, week, month, year, all
+
+  # 排序方式
+  sort_by: "hot"  # hot, new, top, rising
+
+# ==================== Hacker News 数据源 ====================
+hackernews:
+  enabled: true
+
+  # 抓取的内容类型
+  content_types:
+    - "top"           # 热门故事
+    - "new"           # 新故事
+    - "best"          # 最佳故事
+    - "ask"           # Ask HN
+    - "show"          # Show HN
+
+  # 过滤条件
+  filters:
+    min_score: 20
+    min_comments: 5
+    max_age_hours: 48  # 只抓取 48 小时内的内容
+
+  # 关键词（标题匹配）
+  keywords:
+    - "AI"
+    - "LLM"
+    - "ChatGPT"
+    - "Claude"
+    - "funding"
+    - "startup"
+    - "launch"
+    - "YC"
+    - "open source"
+    - "Show HN"
+    - "Ask HN"
+
+  # 评论分析
+  analyze_comments: true
+  max_comments_to_analyze: 50  # 每个帖子最多分析多少条评论
+
+# ==================== VC 渠道数据源 ====================
+vc_channels:
+  enabled: true
+
+  # VC 博客和新闻
+  vc_blogs:
+    - name: "Andreessen Horowitz (a16z)"
+      url: "https://a16z.com/feed/"
+      type: "rss"
+      priority: "high"
+
+    - name: "Y Combinator Blog"
+      url: "https://www.ycombinator.com/blog/feed"
+      type: "rss"
+      priority: "high"
+
+    - name: "Sequoia Capital"
+      url: "https://www.sequoiacap.com/feed/"
+      type: "rss"
+      priority: "high"
+
+    - name: "First Round Review"
+      url: "https://review.firstround.com/feed"
+      type: "rss"
+      priority: "high"
+
+    - name: "NFX"
+      url: "https://www.nfx.com/feed"
+      type: "rss"
+      priority: "medium"
+
+    - name: "Initialized Capital"
+      url: "https://initialized.com/feed"
+      type: "rss"
+      priority: "medium"
+
+  # 融资数据库
+  funding_databases:
+    - name: "Crunchbase"
+      enabled: false  # 需要 API key
+      api_key_env: "CRUNCHBASE_API_KEY"
+      categories:
+        - "Artificial Intelligence"
+        - "Machine Learning"
+        - "SaaS"
+        - "Developer Tools"
+
+    - name: "PitchBook"
+      enabled: false  # 需要订阅
+
+  # Twitter VC 账号
+  vc_twitter_accounts:
+    - "@pmarca"          # Marc Andreessen (a16z)
+    - "@bgurley"         # Bill Gurley (Benchmark)
+    - "@chamath"         # Chamath Palihapitiya
+    - "@naval"           # Naval Ravikant
+    - "@paulg"           # Paul Graham (YC)
+    - "@sama"            # Sam Altman
+    - "@patrickc"        # Patrick Collison (Stripe)
+    - "@dhh"             # DHH (Basecamp)
+    - "@patio11"         # Patrick McKenzie
+    - "@levelsio"        # Pieter Levels
+
+# ==================== Product Hunt 数据源 ====================
+producthunt:
+  enabled: true
+
+  # 分类
+  categories:
+    - "Artificial Intelligence"
+    - "Developer Tools"
+    - "Productivity"
+    - "SaaS"
+    - "No-Code"
+    - "Automation"
+
+  # 过滤条件
+  filters:
+    min_upvotes: 50
+    min_comments: 5
+    featured_only: false
+
+  # 抓取频率
+  check_interval_hours: 6
+
+# ==================== GitHub Trending 数据源 ====================
+github:
+  enabled: true
+
+  # 监控的编程语言
+  languages:
+    - "Python"
+    - "TypeScript"
+    - "JavaScript"
+    - "Go"
+    - "Rust"
+    - "All"  # 全语言
+
+  # 时间范围
+  time_ranges:
+    - "daily"
+    - "weekly"
+
+  # 过滤条件
+  filters:
+    min_stars: 300
+    min_forks: 10
+    days_since_update: 90
+
+  # 关键词（仓库描述/README）
+  keywords:
+    - "AI agent"
+    - "LLM"
+    - "GPT"
+    - "Claude"
+    - "RAG"
+    - "vector database"
+    - "automation"
+    - "framework"
+
+# ==================== Indie Hackers 数据源 ====================
+indiehackers:
+  enabled: true
+
+  # 监控的板块
+  sections:
+    - "latest"
+    - "milestones"
+    - "landing-page-feedback"
+    - "idea-validation"
+
+  # 过滤条件
+  filters:
+    min_upvotes: 10
+    min_comments: 3
+
+  # 关键词
+  keywords:
+    - "AI"
+    - "SaaS"
+    - "automation"
+    - "MRR"
+    - "revenue"
+    - "launch"
+    - "failed"
+    - "lesson"
+
+# ==================== Dev.to / Medium 数据源 ====================
+tech_blogs:
+  enabled: true
+
+  # Dev.to
+  devto:
+    enabled: true
+    tags:
+      - "ai"
+      - "machinelearning"
+      - "gpt"
+      - "automation"
+      - "productivity"
+      - "saas"
+    min_reactions: 20
+
+  # Medium
+  medium:
+    enabled: false  # 需要会员才能完整访问
+    publications:
+      - "Towards Data Science"
+      - "Better Programming"
+      - "The Startup"
+
+# ==================== 通用配置 ====================
+global_settings:
+  # 抓取频率（秒）
+  default_check_interval: 3600  # 1 小时
+
+  # 代理配置（用于被限制的平台）
+  proxy:
+    enabled: true
+    us_west_proxy: "${US_WEST_PROXY}"  # 美西代理服务器
+
+  # 速率限制
+  rate_limiting:
+    requests_per_minute: 30
+    requests_per_hour: 1000
+
+  # 数据去重
+  deduplication:
+    enabled: true
+    time_window_hours: 24
+    similarity_threshold: 0.85  # 文本相似度阈值
+
+  # 数据保留
+  retention:
+    raw_data_days: 90
+    analyzed_data_days: 365
+
+# ==================== 排除规则 ====================
+global_exclusions:
+  # 全局排除关键词
+  keywords:
+    - "spam"
+    - "scam"
+    - "fake"
+    - "clickbait"
+    - "adult"
+    - "nsfw"
+    - "casino"
+    - "porn"
+
+  # 排除的域名
+  domains:
+    - "spam-site.com"
+    - "clickbait-news.com"
+
+  # 排除的用户/账号
+  blocked_users:
+    - "known_spammer_123"
+
+# ==================== 优先级配置 ====================
+priority_rules:
+  # 高优先级信号
+  high_priority:
+    - contains: ["Series A", "Series B", "funding", "raised"]
+      boost: 2.0
+
+    - contains: ["YC", "Y Combinator"]
+      boost: 1.8
+
+    - contains: ["breakthrough", "SOTA", "new model"]
+      boost: 1.5
+
+    - author_followers: "> 10000"
+      boost: 1.3
+
+  # 中优先级信号
+  medium_priority:
+    - contains: ["bug", "error", "limitation"]
+      boost: 1.0
+
+    - engagement: "> 100"
+      boost: 1.2
+
+  # 低优先级（降权）
+  low_priority:
+    - contains: ["question", "help needed"]
+      boost: 0.8

@@ -1,0 +1,488 @@
+# ============================================================================
+# 高信噪比关键词配置
+# ============================================================================
+# 这些关键词经过精心挑选，能够有效识别有价值的市场信号
+# 同时过滤掉噪音和低质量内容
+# ============================================================================
+
+# ==================== 强痛点信号词 ====================
+# 这些词组合通常表示用户遇到了真实的问题
+strong_pain_signals:
+  # 表达挫败感的词
+  frustration:
+    - "so frustrating"
+    - "driving me crazy"
+    - "waste of time"
+    - "can't believe"
+    - "ridiculous"
+    - "unacceptable"
+    - "disappointed"
+    - "fed up with"
+
+  # 表达需求未被满足
+  unmet_needs:
+    - "wish there was"
+    - "need something that"
+    - "looking for alternative"
+    - "better solution"
+    - "anyone know of"
+    - "recommend a tool"
+    - "switching from"
+
+  # 表达功能缺失
+  missing_features:
+    - "doesn't support"
+    - "can't do"
+    - "missing feature"
+    - "no way to"
+    - "would be nice if"
+    - "hoping for"
+    - "still waiting for"
+
+  # 表达性能/质量问题
+  quality_issues:
+    - "too slow"
+    - "keeps failing"
+    - "constantly errors"
+    - "quality dropped"
+    - "not reliable"
+    - "inconsistent results"
+    - "broken since update"
+
+  # 表达成本问题
+  cost_issues:
+    - "too expensive"
+    - "pricing is insane"
+    - "can't afford"
+    - "looking for cheaper"
+    - "free alternative"
+    - "pricing model sucks"
+
+# ==================== 市场机会信号词 ====================
+# 这些词通常伴随着商业机会的讨论
+opportunity_signals:
+  # 产品发布和启动
+  launches:
+    - "just launched"
+    - "announcing"
+    - "introducing"
+    - "released today"
+    - "now available"
+    - "coming soon"
+    - "beta access"
+    - "early access"
+
+  # 融资相关（强信号）
+  funding:
+    - "raised $"
+    - "Series A"
+    - "Series B"
+    - "seed round"
+    - "funding announcement"
+    - "backed by"
+    - "led by"  # 投资机构
+
+  # 增长里程碑
+  growth_milestones:
+    - "reached 10k users"
+    - "first $100k"
+    - "profitable"
+    - "MRR"
+    - "ARR"
+    - "crossed $1M"
+    - "went viral"
+    - "Product Hunt #1"
+
+  # 市场验证
+  validation:
+    - "customers love"
+    - "paying users"
+    - "retention rate"
+    - "conversion rate"
+    - "PMF"  # Product-Market Fit
+    - "waitlist"
+    - "sold out"
+
+  # 创业和 Solo 创业
+  indie_startup:
+    - "solo founder"
+    - "bootstrapped"
+    - "side project"
+    - "built in public"
+    - "indie hacker"
+    - "solopreneur"
+    - "maker"
+    - "quit my job to"
+
+# ==================== 技术趋势信号词 ====================
+tech_trend_signals:
+  # AI 前沿技术
+  ai_cutting_edge:
+    - "new model"
+    - "SOTA"  # State of the Art
+    - "breakthrough"
+    - "outperforms GPT"
+    - "beats Claude"
+    - "open weights"
+    - "fine-tuning"
+    - "RAG pipeline"
+    - "agent framework"
+    - "multimodal"
+    - "vision model"
+    - "embedding model"
+
+  # 开发工具和框架
+  dev_tools:
+    - "new framework"
+    - "CLI tool"
+    - "VS Code extension"
+    - "browser extension"
+    - "SDK"
+    - "API wrapper"
+    - "boilerplate"
+    - "starter template"
+
+  # 自动化和工作流
+  automation:
+    - "automate"
+    - "workflow"
+    - "no-code"
+    - "low-code"
+    - "zapier alternative"
+    - "automation tool"
+    - "script to"
+
+# ==================== 用户画像关键词 ====================
+# 用于识别目标用户群体
+user_persona_keywords:
+  # 开发者
+  developers:
+    - "as a developer"
+    - "coding in"
+    - "debugging"
+    - "refactoring"
+    - "pull request"
+    - "git workflow"
+    - "CI/CD"
+
+  # 内容创作者
+  creators:
+    - "content creator"
+    - "writing blog"
+    - "newsletter"
+    - "YouTube channel"
+    - "podcast"
+    - "social media manager"
+
+  # 创业者/小企业主
+  entrepreneurs:
+    - "startup founder"
+    - "small business"
+    - "freelancer"
+    - "agency owner"
+    - "consultant"
+    - "indie maker"
+
+  # 企业用户
+  enterprise:
+    - "enterprise"
+    - "team of"
+    - "company use"
+    - "organization"
+    - "procurement"
+    - "IT department"
+
+# ==================== 行业细分关键词 ====================
+industry_segments:
+  # AI 开发工具
+  ai_dev_tools:
+    - "AI IDE"
+    - "code completion"
+    - "code generation"
+    - "AI assistant"
+    - "copilot alternative"
+    - "AI debugging"
+
+  # 内容生成
+  content_generation:
+    - "AI writing"
+    - "blog generator"
+    - "copywriting AI"
+    - "content at scale"
+    - "SEO content"
+    - "social media posts"
+
+  # 数据分析
+  data_analytics:
+    - "data pipeline"
+    - "ETL tool"
+    - "business intelligence"
+    - "analytics platform"
+    - "data visualization"
+
+  # 客户支持
+  customer_support:
+    - "customer service AI"
+    - "chatbot"
+    - "help desk"
+    - "support automation"
+    - "ticket system"
+
+  # 营销和增长
+  marketing_growth:
+    - "email marketing"
+    - "lead generation"
+    - "SEO tool"
+    - "analytics"
+    - "A/B testing"
+    - "conversion optimization"
+
+# ==================== 噪音过滤词（排除） ====================
+# 这些词通常伴随低质量内容
+noise_filters:
+  # 垃圾营销
+  spam_indicators:
+    - "click here"
+    - "limited time"
+    - "act now"
+    - "guaranteed"
+    - "make money fast"
+    - "passive income secret"
+    - "one weird trick"
+    - "you won't believe"
+    - "shocking"
+
+  # 低质量讨论
+  low_quality:
+    - "lol"
+    - "lmao"
+    - "first!"
+    - "upvote if"
+    - "like and subscribe"
+    - "check out my"
+    - "follow me"
+
+  # 政治/争议话题（可选过滤）
+  controversial:
+    - "political"
+    - "election"
+    - "Trump"
+    - "Biden"
+    # 根据需要添加更多
+
+  # 加密货币诈骗（如不监控 crypto）
+  crypto_spam:
+    - "crypto giveaway"
+    - "Bitcoin scam"
+    - "rug pull"
+    - "pump and dump"
+    - "shitcoin"
+
+# ==================== 情感分析关键词 ====================
+sentiment_keywords:
+  # 积极情感
+  positive:
+    - "love"
+    - "amazing"
+    - "excellent"
+    - "fantastic"
+    - "impressed"
+    - "solved my problem"
+    - "game changer"
+    - "must have"
+    - "highly recommend"
+
+  # 消极情感（痛点机会）
+  negative:
+    - "hate"
+    - "terrible"
+    - "awful"
+    - "worst"
+    - "useless"
+    - "waste"
+    - "regret"
+    - "never again"
+
+  # 中性但表达需求
+  neutral_need:
+    - "looking for"
+    - "need help with"
+    - "how do I"
+    - "best way to"
+    - "recommend"
+
+# ==================== 紧急度信号 ====================
+urgency_signals:
+  # 高紧急度
+  high_urgency:
+    - "urgent"
+    - "ASAP"
+    - "critical"
+    - "production down"
+    - "blocking"
+    - "emergency"
+    - "time sensitive"
+
+  # 中等紧急度
+  medium_urgency:
+    - "need soon"
+    - "this week"
+    - "deadline"
+    - "priority"
+
+# ==================== 商业化路径关键词 ====================
+monetization_keywords:
+  # SaaS 相关
+  saas:
+    - "subscription"
+    - "monthly plan"
+    - "pricing tier"
+    - "freemium"
+    - "trial"
+    - "enterprise plan"
+
+  # API 相关
+  api:
+    - "API pricing"
+    - "rate limit"
+    - "API key"
+    - "webhook"
+    - "integration"
+
+  # Marketplace/插件
+  marketplace:
+    - "Chrome extension"
+    - "VS Code plugin"
+    - "Figma plugin"
+    - "Shopify app"
+    - "WordPress plugin"
+
+  # 一次性付费
+  one_time:
+    - "lifetime deal"
+    - "buy once"
+    - "one-time payment"
+    - "AppSumo"
+
+# ==================== 竞品分析关键词 ====================
+competitor_keywords:
+  # 比较和替代
+  comparisons:
+    - "vs"
+    - "alternative to"
+    - "better than"
+    - "compared to"
+    - "switching from"
+    - "migrating from"
+
+  # 竞品列表（AI 领域）
+  ai_products:
+    - "ChatGPT"
+    - "Claude"
+    - "Gemini"
+    - "GPT-4"
+    - "Perplexity"
+    - "Cursor"
+    - "GitHub Copilot"
+    - "Codeium"
+    - "Tabnine"
+    - "Midjourney"
+    - "Stable Diffusion"
+    - "DALL-E"
+
+# ==================== 社区和平台关键词 ====================
+community_keywords:
+  # 高质量社区
+  quality_communities:
+    - "Y Combinator"
+    - "YC"
+    - "Indie Hackers"
+    - "Product Hunt"
+    - "Hacker News"
+    - "r/LocalLLaMA"
+    - "r/MachineLearning"
+
+  # 官方发布渠道
+  official_channels:
+    - "official release"
+    - "changelog"
+    - "product update"
+    - "roadmap"
+
+# ==================== 组合规则 ====================
+# 高信噪比的关键词组合规则
+combination_rules:
+  # 强痛点 = 产品名 + 痛点词
+  strong_pain_pattern:
+    format: "[产品名] + [痛点词]"
+    examples:
+      - "ChatGPT too expensive"
+      - "Cursor keeps crashing"
+      - "Claude API slow"
+    weight: 2.0  # 权重，用于排序
+
+  # 强机会 = 行动词 + 市场
+  strong_opportunity_pattern:
+    format: "[行动词] + [市场/问题]"
+    examples:
+      - "launched AI writing tool"
+      - "raised $2M for AI agent"
+      - "built AI code reviewer"
+    weight: 1.8
+
+  # 趋势 = 新技术 + 采用信号
+  trend_pattern:
+    format: "[新技术] + [采用/讨论]"
+    examples:
+      - "RAG pipeline popular"
+      - "everyone using AI agents"
+      - "vector databases trending"
+    weight: 1.5
+
+# ==================== 上下文增强词 ====================
+# 这些词单独出现价值不高，但与核心关键词组合时能增强信号
+context_enhancers:
+  quantifiers:
+    - "100+ users"
+    - "thousands of"
+    - "millions in revenue"
+    - "10x growth"
+    - "doubled"
+
+  time_markers:
+    - "this week"
+    - "just released"
+    - "coming next month"
+    - "in 2024"
+    - "past year"
+
+  credibility_markers:
+    - "Forbes featured"
+    - "TechCrunch covered"
+    - "YC backed"
+    - "acquired by"
+    - "funded by a16z"
+
+# ==================== 使用说明 ====================
+usage_notes: |
+  1. **组合使用**: 单个关键词价值有限，应该组合使用（如：产品名 + 痛点词）
+  2. **权重排序**: 使用 weight 字段对匹配结果排序，优先处理高权重内容
+  3. **动态更新**: 根据实际数据质量定期更新关键词列表
+  4. **A/B 测试**: 新增关键词先小规模测试，验证信噪比后再全量使用
+  5. **排除优先**: 噪音过滤词应该优先执行，避免浪费 LLM token
+
+# ==================== 评估指标 ====================
+evaluation_metrics:
+  # 关键词效果评估
+  keyword_performance:
+    signal_to_noise_ratio: "匹配内容中高质量内容占比"
+    precision: "匹配的内容中相关内容占比"
+    recall: "相关内容中被匹配到的占比"
+    actionable_rate: "匹配内容中可执行机会占比"
+
+  # 目标基准
+  target_benchmarks:
+    signal_to_noise_ratio: "> 0.7"  # 70% 以上是高质量
+    precision: "> 0.8"
+    recall: "> 0.6"
+    actionable_rate: "> 0.3"  # 30% 以上能转化为行动

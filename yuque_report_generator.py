@@ -10,7 +10,7 @@ class YuqueReportGenerator:
         self.token = os.getenv('YUQUE_TOKEN', 'EmucIYlJro7ic4O4ZS6UujQZm89tXmwor7PwNYmL')
         self.base_url = 'https://www.yuque.com/api/v2'
         self.namespace = os.getenv('YUQUE_NAMESPACE', 'diandongmianbao')
-        self.repo_slug = self._get_or_create_repo()
+        self.repo_slug = os.getenv('YUQUE_REPO_SLUG', 'cg40cd')  # 使用用户指定的知识库
 
     def _get_or_create_repo(self):
         """获取或创建报告知识库"""
@@ -20,14 +20,19 @@ class YuqueReportGenerator:
 
         try:
             response = requests.get(repos_url, headers=headers)
-            repos = response.json().get('data', [])
 
-            # 查找 market-monitor-reports 知识库
-            for repo in repos:
-                if repo.get('slug') == 'market-monitor-reports':
-                    return repo['slug']
+            if response.status_code == 200:
+                repos_data = response.json()
+                repos = repos_data.get('data', []) if isinstance(repos_data, dict) else []
+
+                # 查找 market-monitor-reports 知识库
+                for repo in repos:
+                    if repo.get('slug') == 'market-monitor-reports':
+                        print(f"✅ 找到已存在的知识库: market-monitor-reports")
+                        return repo['slug']
 
             # 如果不存在，创建新知识库
+            print("📝 创建新知识库: market-monitor-reports")
             create_url = f"{self.base_url}/repos"
             payload = {
                 'name': 'Market Monitor Reports',
@@ -37,9 +42,21 @@ class YuqueReportGenerator:
             }
 
             response = requests.post(create_url, headers=headers, json=payload)
-            return response.json()['data']['slug']
+
+            if response.status_code in [200, 201]:
+                created_repo = response.json()
+                if isinstance(created_repo, dict) and 'data' in created_repo:
+                    print(f"✅ 知识库创建成功")
+                    return created_repo['data']['slug']
+                else:
+                    print(f"⚠️ 知识库创建响应格式异常，使用默认slug")
+                    return 'market-monitor-reports'
+            else:
+                print(f"❌ 创建知识库失败: {response.status_code} - {response.text}")
+                return 'market-monitor-reports'
+
         except Exception as e:
-            print(f"获取/创建知识库失败: {e}")
+            print(f"⚠️ 获取/创建知识库失败: {e}")
             return 'market-monitor-reports'  # 使用默认值
 
     def create_report(self, data):

@@ -1,0 +1,386 @@
+# ============================================================================
+# AI 市场监控系统 - 高质量博主和 Influencer 名单
+# ============================================================================
+# 这些账号具有高信噪比,值得重点监控
+# ============================================================================
+
+# ==================== AI 研究者和技术专家 ====================
+ai_researchers:
+  - name: "Andrej Karpathy"
+    twitter: "@karpathy"
+    category: "AI Research"
+    priority: "high"
+    description: "前 Tesla AI 总监, OpenAI 创始成员"
+
+  - name: "Yann LeCun"
+    twitter: "@ylecun"
+    category: "AI Research"
+    priority: "high"
+    description: "Meta AI 首席科学家, Turing Award 获得者"
+
+  - name: "Andrew Ng"
+    twitter: "@AndrewYNg"
+    category: "AI Research/Education"
+    priority: "high"
+    description: "Coursera/DeepLearning.AI 创始人"
+
+  - name: "François Chollet"
+    twitter: "@fchollet"
+    category: "AI Research"
+    priority: "high"
+    description: "Keras 作者, Google AI"
+
+  - name: "Ilya Sutskever"
+    twitter: "@ilyasut"
+    category: "AI Research"
+    priority: "high"
+    description: "OpenAI 联合创始人兼首席科学家"
+
+  - name: "Simon Willison"
+    twitter: "@simonw"
+    github: "simonw"
+    category: "AI/Developer Tools"
+    priority: "high"
+    description: "开发者工具专家, LLM 实践者"
+
+  - name: "Jeremy Howard"
+    twitter: "@jeremyphoward"
+    category: "AI Research/Education"
+    priority: "medium"
+    description: "fast.ai 创始人"
+
+  - name: "Lex Fridman"
+    twitter: "@lexfridman"
+    category: "AI Research/Podcast"
+    priority: "medium"
+    description: "AI 研究员, 播客主持人"
+
+# ==================== AI 产品创始人 ====================
+ai_founders:
+  - name: "Sam Altman"
+    twitter: "@sama"
+    category: "AI/Startup"
+    priority: "high"
+    description: "OpenAI CEO"
+
+  - name: "Dario Amodei"
+    twitter: "@DarioAmodei"
+    category: "AI/Startup"
+    priority: "high"
+    description: "Anthropic CEO (Claude)"
+
+  - name: "Emad Mostaque"
+    twitter: "@EMostaque"
+    category: "AI/Startup"
+    priority: "medium"
+    description: "Stability AI 创始人 (Stable Diffusion)"
+
+  - name: "Aravind Srinivas"
+    twitter: "@AravSrinivas"
+    category: "AI/Startup"
+    priority: "high"
+    description: "Perplexity AI CEO"
+
+  - name: "Amjad Masad"
+    twitter: "@amasad"
+    category: "Developer Tools"
+    priority: "high"
+    description: "Replit CEO"
+
+  - name: "Guillermo Rauch"
+    twitter: "@rauchg"
+    category: "Developer Tools"
+    priority: "medium"
+    description: "Vercel CEO"
+
+  - name: "Anysphere Team"
+    twitter: "@cursor_ai"
+    category: "Developer Tools"
+    priority: "high"
+    description: "Cursor 官方账号"
+
+# ==================== Indie Hackers / Solo Founders ====================
+indie_hackers:
+  - name: "Pieter Levels"
+    twitter: "@levelsio"
+    category: "Indie Hacker"
+    priority: "high"
+    description: "Nomad List, Photo AI 创始人, 超级个人代表"
+
+  - name: "Linus Ekenstam"
+    twitter: "@LinusEkenstam"
+    category: "AI/Indie Hacker"
+    priority: "high"
+    description: "AI 工具开发者, 分享 AI 创业经验"
+
+  - name: "Marc Louvion"
+    twitter: "@marc_louvion"
+    category: "AI/Indie Hacker"
+    priority: "high"
+    description: "AI 创业者, 分享产品开发和增长"
+
+  - name: "Tony Dinh"
+    twitter: "@tdinh_me"
+    category: "Indie Hacker"
+    priority: "high"
+    description: "多产品独立开发者, DevUtils 等"
+
+  - name: "Danny Postma"
+    twitter: "@dannypostmaa"
+    category: "AI/Indie Hacker"
+    priority: "high"
+    description: "Headshot AI 等 AI 产品创始人"
+
+  - name: "Steven Tey"
+    twitter: "@steventey"
+    category: "Developer/Indie"
+    priority: "medium"
+    description: "Vercel, Dub.co 创始人"
+
+  - name: "Greg Isenberg"
+    twitter: "@gregisenberg"
+    category: "Startup/Community"
+    priority: "high"
+    description: "创业导师, Late Checkout 社区"
+
+  - name: "Arvid Kahl"
+    twitter: "@arvidkahl"
+    category: "Indie Hacker/SaaS"
+    priority: "medium"
+    description: "The Bootstrapped Founder 作者"
+
+  - name: "Indie Hackers"
+    twitter: "@IndieHackers"
+    category: "Community"
+    priority: "high"
+    description: "Indie Hackers 官方账号"
+
+# ==================== VC 和投资人 ====================
+vcs_investors:
+  - name: "Marc Andreessen"
+    twitter: "@pmarca"
+    category: "VC"
+    priority: "high"
+    description: "a16z 联合创始人"
+
+  - name: "Paul Graham"
+    twitter: "@paulg"
+    category: "VC/Startup"
+    priority: "high"
+    description: "Y Combinator 创始人"
+
+  - name: "Naval Ravikant"
+    twitter: "@naval"
+    category: "VC/Philosophy"
+    priority: "high"
+    description: "AngelList 创始人"
+
+  - name: "Bill Gurley"
+    twitter: "@bgurley"
+    category: "VC"
+    priority: "medium"
+    description: "Benchmark Capital"
+
+  - name: "Chamath Palihapitiya"
+    twitter: "@chamath"
+    category: "VC"
+    priority: "medium"
+    description: "Social Capital 创始人"
+
+  - name: "Elad Gil"
+    twitter: "@eladgil"
+    category: "VC/Startup"
+    priority: "medium"
+    description: "投资人, 连续创业者"
+
+  - name: "Jason Calacanis"
+    twitter: "@Jason"
+    category: "VC/Podcast"
+    priority: "medium"
+    description: "天使投资人, This Week in Startups"
+
+# ==================== 开发者工具专家 ====================
+dev_tools_experts:
+  - name: "DHH (David Heinemeier Hansson)"
+    twitter: "@dhh"
+    category: "Developer/Indie"
+    priority: "high"
+    description: "Ruby on Rails 创建者, Basecamp/37signals"
+
+  - name: "Guillermo Rauch"
+    twitter: "@rauchg"
+    category: "Developer Tools"
+    priority: "medium"
+    description: "Vercel CEO, Next.js"
+
+  - name: "Evan You"
+    twitter: "@youyuxi"
+    category: "Open Source"
+    priority: "medium"
+    description: "Vue.js 创建者"
+
+  - name: "Dan Abramov"
+    twitter: "@dan_abramov"
+    category: "Developer/React"
+    priority: "medium"
+    description: "React 核心团队"
+
+  - name: "Kent C. Dodds"
+    twitter: "@kentcdodds"
+    category: "Developer/Education"
+    priority: "low"
+    description: "开发者教育者"
+
+# ==================== 产品和设计 ====================
+product_design:
+  - name: "Patrick McKenzie (patio11)"
+    twitter: "@patio11"
+    category: "SaaS/Growth"
+    priority: "high"
+    description: "SaaS 增长专家, Stripe"
+
+  - name: "Andrew Chen"
+    twitter: "@andrewchen"
+    category: "Growth/VC"
+    priority: "high"
+    description: "a16z 合伙人, 增长专家"
+
+  - name: "Lenny Rachitsky"
+    twitter: "@lennysan"
+    category: "Product/Growth"
+    priority: "medium"
+    description: "产品和增长 Newsletter"
+
+  - name: "Julie Zhuo"
+    twitter: "@joulee"
+    category: "Product/Design"
+    priority: "medium"
+    description: "前 Facebook 设计副总裁"
+
+# ==================== AI 新闻和媒体 ====================
+ai_media:
+  - name: "Ben Thompson"
+    twitter: "@benthompson"
+    category: "Tech Analysis"
+    priority: "high"
+    description: "Stratechery 创始人"
+
+  - name: "Casey Newton"
+    twitter: "@CaseyNewton"
+    category: "Tech Journalism"
+    priority: "medium"
+    description: "Platformer 创始人"
+
+  - name: "The Verge"
+    twitter: "@verge"
+    category: "Tech Media"
+    priority: "medium"
+    description: "科技媒体"
+
+  - name: "TechCrunch"
+    twitter: "@TechCrunch"
+    category: "Tech Media"
+    priority: "medium"
+    description: "科技新闻"
+
+  - name: "AI Breakfast"
+    twitter: "@aibreakfast"
+    category: "AI News"
+    priority: "medium"
+    description: "AI 新闻聚合"
+
+# ==================== AI 实践者和开发者 ====================
+ai_practitioners:
+  - name: "Swyx (Shawn Wang)"
+    twitter: "@swyx"
+    category: "AI/Developer"
+    priority: "high"
+    description: "AI Engineer, Latent Space 播客"
+
+  - name: "Harrison Chase"
+    twitter: "@hwchase17"
+    category: "AI/Open Source"
+    priority: "high"
+    description: "LangChain 创始人"
+
+  - name: "Logan Kilpatrick"
+    twitter: "@OfficialLoganK"
+    category: "AI/DevRel"
+    priority: "medium"
+    description: "OpenAI DevRel"
+
+  - name: "Karpathy Fans (AI Community)"
+    twitter: "@ai_for_success"
+    category: "AI Community"
+    priority: "low"
+    description: "AI 学习社区"
+
+# ==================== 社区和平台账号 ====================
+communities:
+  - name: "Y Combinator"
+    twitter: "@ycombinator"
+    category: "Startup Community"
+    priority: "high"
+    description: "YC 官方账号"
+
+  - name: "Product Hunt"
+    twitter: "@ProductHunt"
+    category: "Product Discovery"
+    priority: "high"
+    description: "产品发现平台"
+
+  - name: "Hacker News Bot"
+    twitter: "@newsycombinator"
+    category: "News Aggregator"
+    priority: "medium"
+    description: "HN 热门内容机器人"
+
+  - name: "GitHub"
+    twitter: "@github"
+    category: "Developer Platform"
+    priority: "medium"
+    description: "GitHub 官方"
+
+# ==================== 配置 ====================
+monitoring_config:
+  # 高优先级账号的检查频率（分钟）
+  high_priority_check_interval: 30
+
+  # 中优先级账号的检查频率（分钟）
+  medium_priority_check_interval: 120
+
+  # 低优先级账号的检查频率（分钟）
+  low_priority_check_interval: 360
+
+  # 最小互动阈值（按优先级）
+  engagement_thresholds:
+    high_priority:
+      min_likes: 10
+      min_retweets: 2
+    medium_priority:
+      min_likes: 20
+      min_retweets: 5
+    low_priority:
+      min_likes: 50
+      min_retweets: 10
+
+# ==================== 内容过滤规则 ====================
+content_filters:
+  # 关注的话题标签
+  relevant_hashtags:
+    - "#AI"
+    - "#MachineLearning"
+    - "#LLM"
+    - "#ChatGPT"
+    - "#Claude"
+    - "#Startup"
+    - "#IndieHacker"
+    - "#SaaS"
+    - "#ProductLaunch"
+    - "#BuildInPublic"
+
+  # 排除的内容类型
+  exclude_types:
+    - "pure_retweet"  # 纯转发（无评论）
+    - "promotional"   # 纯广告
+    - "personal"      # 个人生活（非相关）
