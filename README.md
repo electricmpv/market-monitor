@@ -1,454 +1,301 @@
-# 🎯 AI市场机会监控系统 v2.0
+# 🎯 AI Market Monitor - 市场机会监控系统
 
-> 一套24小时自动运行的AI市场情报系统，为独立开发者发现创业机会、融资信息、技术突破和用户痛点。
+> 多源数据采集 + 深度CODEX分析 + 自动推送语雀
 
-**作者**: 电动面包 (AI Solopreneur)  
-**目标**: 帮助你在睡觉时自动捕获全球AI市场最有价值的信息
+## 📋 项目概览
 
----
+AI Market Monitor 是一个自动化市场机会监控系统，从多个数据源采集 AI/技术领域的市场信号，使用深度分析框架进行 CODEX 分析，并自动生成专业的市场分析报告推送到语雀知识库。
 
-## 📊 系统架构
+### 核心特性
 
-```
-┌─────────────────────────────────────────────────────┐
-│         🎯 市场机会监控系统 v2.0                    │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│  📡 痛点雷达 (Pain Radar)                           │
-│  └─ Twitter + Hacker News 用户吐槽扫描             │
-│  └─ AI诊断市场机会                                 │
-│  └─ 输出: 市场机会分析报告                         │
-│                                                     │
-│  🔍 机会猎手 (Opportunity Hunter)                  │
-│  └─ GitHub 高星项目发现                            │
-│  └─ Hacker News 融资/创业新闻                      │
-│  └─ AI分析商业价值                                 │
-│  └─ 输出: 机会发现报告                             │
-│                                                     │
-│  📨 统一交付 (Unified Delivery)                    │
-│  └─ Word文档生成                                   │
-│  └─ 微信推送                                       │
-│  └─ 本地向量数据库存储                             │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-```
-
----
+- **🌐 多源数据采集**：Twitter/X、Reddit、GitHub Trending、Hacker News
+- **🧠 深度分析框架**：10 部分结构化分析，包含行业定位、用户画像、商业化路径、超级个人适配度评分
+- **📊 高质量筛选**：173+ 关键词、53 位高质量影响者、智能信噪比评分
+- **📤 自动发布**：一键推送到语雀知识库
+- **⏰ 定时执行**：支持 cron 定时任务
 
 ## 🚀 快速开始
 
-### 第一步：安装依赖
+### 一键执行完整工作流
 
 ```bash
-# 克隆或下载本项目
-cd market_monitor_v2
+# 激活虚拟环境
+source venv/bin/activate
 
-# 安装Python依赖
-pip install google-genai twikit requests chromadb python-docx
-
-# 或使用requirements.txt
-pip install -r requirements.txt
+# 执行完整工作流：采集 → 分析 → 推送语雀
+python3 run_complete_workflow.py
 ```
 
-### 第二步：配置API密钥
-
-编辑 `config.env` 文件，填入你的API密钥：
+### 单独运行各模块
 
 ```bash
-# 1. Gemini API密钥
-# 申请地址: https://aistudio.google.com/app/apikey
-GEMINI_API_KEY=your_key_here
+# 1. 仅数据采集
+python3 multi_source_collector.py
 
-# 2. PushPlus Token (微信推送)
-# 申请地址: http://www.pushplus.plus/
-PUSHPLUS_TOKEN=your_token_here
+# 2. 采集 + CODEX 分析（不推送）
+python3 run_codex_workflow.py
 
-# 3. GitHub Token (可选，用于提高API限制)
-# 申请地址: https://github.com/settings/tokens
-GITHUB_TOKEN=your_token_here
-
-# 4. 代理端口 (如果需要)
-PROXY_PORT=19828
+# 3. 推送已有报告到语雀
+python3 push_deep_report_to_yuque.py /path/to/report.md
 ```
 
-### 第三步：获取Twitter Cookies (可选)
+## 📁 项目结构
 
-如果要监控Twitter，需要获取登录凭证：
+```
+market-monitor/
+├── config/                          # 配置文件
+│   ├── data_sources.yaml           # 数据源配置（8个平台）
+│   ├── high_signal_keywords.yaml   # 高信噪比关键词（173+）
+│   ├── influencers.yaml            # 影响者名单（53位）
+│   └── codex_analysis_prompt.yaml  # CODEX 深度分析提示词
+│
+├── data_collectors/                 # 数据采集器
+│   ├── twitter_collector.py        # Twitter/X 采集
+│   ├── reddit_collector.py         # Reddit 采集（RSS模式）
+│   └── github_collector.py         # GitHub Trending 采集
+│
+├── enhanced_config_loader.py       # 统一配置加载器
+├── multi_source_collector.py       # 多源数据采集管理器
+├── run_complete_workflow.py        # 完整工作流入口
+├── push_deep_report_to_yuque.py   # 语雀推送工具
+│
+├── extract_twitter_cookies_from_chrome.py  # Cookie 提取工具
+├── setup_twitter_cookies.py               # Twitter 登录设置
+├── setup_cron.sh                          # 定时任务配置脚本
+│
+└── README.md                       # 本文档
+```
 
-1. 在Chrome浏览器安装插件 "EditThisCookie"
-2. 登录你的Twitter账号
-3. 点击插件 → 导出 → JSON格式
-4. 保存为 `cookies.json` 到项目目录
+## ⚙️ 环境配置
 
-### 第四步：运行系统
+### 1. Python 环境
 
 ```bash
-# 方式1: 运行一次
-python run_monitor.py --all
+# 激活虚拟环境（已存在）
+source venv/bin/activate
 
-# 方式2: 仅运行痛点雷达
-python run_monitor.py --pain
-
-# 方式3: 仅运行机会猎手
-python run_monitor.py --opportunity
-
-# 方式4: 后台守护进程 (每小时运行一次)
-python run_monitor.py --daemon --interval 3600
+# 已安装依赖
+# twikit, praw, requests, beautifulsoup4, pyyaml, lxml
 ```
 
----
+### 2. Twitter 认证配置
 
-## 📋 监控内容详解
-
-### 📡 痛点雷达 (Pain Radar)
-
-**功能**: 从全网用户吐槽中发现市场机会
-
-**监控平台**:
-- **Twitter/X**: 实时用户吐槽、产品反馈
-- **Hacker News**: 技术社区讨论、深度分析
-
-**监控产品** (可自定义):
-- ChatGPT, Claude, DeepSeek
-- Cursor, Midjourney, Sora
-- 等等...
-
-**监控痛点类型**:
-- 功能缺陷: "can't", "doesn't work", "broken"
-- 性能问题: "slow", "expensive", "rate limit"
-- 易用性: "confusing", "hard to use", "steep learning curve"
-- 集成困难: "api down", "integration fail"
-
-**输出**:
-- 市场机会分析报告 (Word)
-- 微信推送
-- 本地数据库存储
-
-### 🔍 机会猎手 (Opportunity Hunter)
-
-**功能**: 发现融资项目、创业团队、技术突破
-
-**监控平台**:
-- **GitHub**: 高星开源项目、新框架发布
-- **Hacker News**: 融资新闻、创业动态、技术突破
-
-**监控关键词** (可自定义):
-- 融资: "Series A", "funding", "raised"
-- 创业: "startup", "founded", "launch"
-- 技术: "breakthrough", "SOTA", "new release"
-- 工具: "AI agent", "RAG", "framework"
-
-**输出**:
-- 机会发现报告 (Word)
-- 微信推送
-- 本地数据库存储
-
----
-
-## 🛠️ 自定义配置
-
-### 修改监控关键词
-
-编辑 `pain_radar_v2.py`:
-
-```python
-PAIN_KEYWORDS = {
-    'ChatGPT': [
-        'can\'t', 'doesn\'t work', 'error',  # 添加你的关键词
-        '你的自定义词'
-    ],
-    # 添加更多产品...
-}
-```
-
-编辑 `opportunity_hunter.py`:
-
-```python
-GITHUB_KEYWORDS = [
-    'AI agent framework',
-    '你的自定义关键词',
-    # 添加更多...
-]
-```
-
-### 修改过滤条件
-
-```python
-# GitHub最小星数 (越高越精准)
-MIN_STARS = 500
-
-# Hacker News最小分数
-HN_MIN_SCORE = 200
-
-# 项目最近更新天数
-DAYS_SINCE_UPDATE = 60
-```
-
-### 修改推送方式
-
-目前支持:
-- **微信推送** (通过PushPlus)
-- **本地Word文件** (自动生成)
-- **本地数据库** (ChromaDB)
-
-可扩展:
-- 钉钉推送
-- Slack推送
-- 邮件推送
-- 自定义Webhook
-
----
-
-## 📈 API成本估算
-
-### 每日成本 (假设每天运行3次)
-
-| 服务 | 调用次数 | 成本 |
-|------|--------|------|
-| Gemini API | 30次 | ~$0.05 |
-| Twitter API | 100次 | 免费* |
-| GitHub API | 30次 | 免费 |
-| Hacker News API | 20次 | 免费 |
-| PushPlus | 3次 | 免费 |
-| **月成本** | - | **~$1.5** |
-
-*Twitter需要付费账户，但可选
-
-### 成本优化建议
-
-1. **使用免费API优先** (GitHub, HN, Reddit)
-2. **本地向量数据库** (ChromaDB) 避免云存储成本
-3. **智能缓存** 避免重复调用
-4. **按需调用** 仅在发现新机会时调用Gemini
-
----
-
-## 🔧 故障排除
-
-### 问题1: 无法连接到API
-
-**症状**: `ConnectionError`, `ProxyError`
-
-**解决**:
-```bash
-# 检查代理设置
-echo $http_proxy  # Linux/Mac
-echo %http_proxy%  # Windows
-
-# 如果不需要代理，设置
-PROXY_PORT=0
-
-# 如果需要代理，检查端口是否正确
-# 常见端口: 7890, 7897, 10809
-```
-
-### 问题2: Twitter无法登录
-
-**症状**: `401 Unauthorized`
-
-**解决**:
-1. 重新导出 `cookies.json`
-2. 确保cookies.json包含: `auth_token`, `ct0`
-3. 检查是否需要更新 `twikit` 库
-   ```bash
-   pip install --upgrade twikit
-   ```
-
-### 问题3: Gemini API错误
-
-**症状**: `429 Too Many Requests`, `Invalid API Key`
-
-**解决**:
-1. 检查API密钥是否正确
-2. 检查API配额是否用尽
-3. 添加重试逻辑 (已内置)
-4. 考虑使用其他模型 (GLM, 本地LLM)
-
-### 问题4: Word文档乱码
-
-**症状**: 生成的Word文件中文乱码
-
-**解决**:
-```python
-# 确保文件名使用UTF-8编码
-filename = f"Report_{datetime.now().strftime('%Y-%m-%d')}.docx"
-```
-
----
-
-## 🌙 后台运行
-
-### Linux/Mac (使用nohup)
+**方式一：从 Chrome 提取 Cookies（推荐）**
 
 ```bash
-# 后台运行，每小时执行一次
-nohup python run_monitor.py --daemon --interval 3600 > monitor.log 2>&1 &
-
-# 查看日志
-tail -f monitor.log
-
-# 停止
-pkill -f run_monitor.py
+# 确保 Chrome 已登录 Twitter
+python3 extract_twitter_cookies_from_chrome.py
 ```
 
-### Linux/Mac (使用systemd)
-
-创建 `/etc/systemd/system/market-monitor.service`:
-
-```ini
-[Unit]
-Description=AI Market Monitor
-After=network.target
-
-[Service]
-Type=simple
-User=ubuntu
-WorkingDirectory=/home/ubuntu/market_monitor_v2
-ExecStart=/usr/bin/python3 run_monitor.py --daemon --interval 3600
-Restart=always
-RestartSec=60
-
-[Install]
-WantedBy=multi-user.target
-```
-
-启动:
-```bash
-sudo systemctl enable market-monitor
-sudo systemctl start market-monitor
-sudo systemctl status market-monitor
-```
-
-### Linux/Mac (使用cron)
+**方式二：交互式登录**
 
 ```bash
-# 编辑crontab
+python3 setup_twitter_cookies.py
+```
+
+提取的 cookies 会保存到 `twitter_cookies.json`（已加入 .gitignore）。
+
+### 3. 语雀配置
+
+环境变量或代码中配置：
+
+```bash
+export YUQUE_TOKEN="your_token_here"
+export YUQUE_NAMESPACE="diandongmianbao"
+export YUQUE_REPO_SLUG="cg40cd"
+```
+
+当前配置推送到：`https://www.yuque.com/diandongmianbao/cg40cd`
+
+## 📊 数据源配置
+
+### 当前监控的数据源
+
+| 平台 | 类型 | 覆盖范围 | 权重 |
+|------|------|----------|------|
+| **Twitter/X** | 社交媒体 | AI 领域 KOL 动态 | 高 |
+| **Reddit** | 社区论坛 | 18 个高优先级 subreddit | 高 |
+| **GitHub Trending** | 开源项目 | Python/JavaScript/TypeScript/Rust | 中 |
+| **Hacker News** | 技术新闻 | Top Stories | 中 |
+| **Product Hunt** | 产品发布 | 新产品发现 | 待实现 |
+
+### Reddit 高优先级 Subreddits
+
+```
+- r/ChatGPT (热度: 极高)
+- r/LocalLLaMA (信噪比: 极高)
+- r/OpenAI (官方动态)
+- r/MachineLearning (技术深度)
+- r/SideProject (商业化机会)
+- ... 共 18 个
+```
+
+### 影响者监控（53 位）
+
+分类：
+- **AI 研究者**：Andrej Karpathy、Yann LeCun、Andrew Ng 等
+- **科技创始人**：Sam Altman、Dario Amodei、Elon Musk 等
+- **独立开发者**：Pieter Levels、Marc Louvion、Tony Dinh 等
+- **投资人/分析师**：Marc Andreessen、Elad Gil 等
+
+## 🧠 深度分析框架
+
+### 10 部分分析结构
+
+1. **核心发现**：紧急度评级、市场信号解读
+2. **用户痛点分析**：痛点分类矩阵、深度剖析
+3. **市场机会识别**：
+   - 行业定位
+   - 用户画像
+   - 7 维度商业化路径对比（SaaS、API、一次性部署、开源+企业版等）
+   - 8 维度超级个人适配度评分
+   - MVP 建议与 ARR 预估
+4. **技术趋势追踪**
+5. **融资/项目动态**
+6. **数据统计洞察**
+7. **AI 分析师多视角点评**
+8. **行动建议优先级矩阵**
+9. **数据来源**
+10. **未来展望**
+
+### 商业化路径 7 维度对比
+
+| 模式 | 定价策略 | 预估 ARR | 启动成本 | 获客难度 | 现金流周期 | 规模化潜力 | 适合人群 |
+|------|---------|---------|----------|----------|-----------|-----------|----------|
+| SaaS订阅 | ... | ... | ... | ... | ... | ... | ... |
+
+### 超级个人适配度 8 维度评分
+
+| 维度 | 评分 | 说明 |
+|------|------|------|
+| 技术门槛 | X/10 | ... |
+| 初始资金 | X/10 | ... |
+| 时间投入 | X/10 | ... |
+| 运营复杂度 | X/10 | ... |
+| 市场验证速度 | X/10 | ... |
+| 规模化难度 | X/10 | ... |
+| 竞争壁垒 | X/10 | ... |
+| 现金流健康 | X/10 | ... |
+| **综合评分** | **X/10** | 推荐等级 |
+
+## ⏰ 定时执行配置
+
+### 使用 Cron
+
+```bash
+# 运行配置脚本（交互式）
+bash setup_cron.sh
+
+# 或手动添加
 crontab -e
 
-# 添加定时任务 (每天早上6:30运行)
-30 6 * * * cd /home/ubuntu/market_monitor_v2 && python run_monitor.py --all >> monitor.log 2>&1
+# 添加以下行（每天 9:00 和 15:00 执行）
+0 9 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_complete_workflow.py >> /tmp/market-monitor.log 2>&1
+0 15 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_complete_workflow.py >> /tmp/market-monitor.log 2>&1
 ```
 
-### Windows (使用任务计划程序)
+### 查看日志
 
-1. 打开"任务计划程序"
-2. 创建基本任务
-3. 触发器: 每天 06:30
-4. 操作: 启动程序
-   - 程序: `C:\Python\python.exe`
-   - 参数: `run_monitor.py --all`
-   - 起始于: `C:\path\to\market_monitor_v2`
+```bash
+# 实时查看
+tail -f /tmp/market-monitor.log
 
----
-
-## 📊 数据存储
-
-### 本地向量数据库 (ChromaDB)
-
-所有信息都存储在 `./my_market_brain/` 目录:
-
-```
-my_market_brain/
-├── pain_points_v2/      # 痛点数据
-├── opportunities_v2/    # 机会数据
-└── chroma.db           # 数据库文件
+# 查看最近 100 行
+tail -100 /tmp/market-monitor.log
 ```
 
-**查询数据**:
+## 🔧 故障排查
 
-```python
-import chromadb
+### Twitter 采集失败
 
-client = chromadb.PersistentClient(path="./my_market_brain")
-collection = client.get_collection(name="pain_points_v2")
+**问题**：twikit 库报错 "'ClientTransaction' object has no attribute 'key'"
 
-# 查询所有痛点
-results = collection.get()
-print(results)
+**解决方案**：
+1. 重新提取 Chrome cookies：`python3 extract_twitter_cookies_from_chrome.py`
+2. 确保 Chrome 已登录 Twitter 且会话有效
+3. 如果仍失败，使用 Reddit、GitHub、HN 作为主要数据源
 
-# 语义搜索
-results = collection.query(
-    query_texts=["AI绘画手指问题"],
-    n_results=5
-)
+### 报告质量不佳
+
+**检查点**：
+- 是否使用了 `run_complete_workflow.py`？
+- 配置文件 `config/codex_analysis_prompt.yaml` 是否存在？
+- 查看生成的报告是否包含 10 个部分？
+
+### 语雀推送失败
+
+**检查点**：
+- `YUQUE_TOKEN` 是否正确？
+- 网络连接是否正常？
+- 知识库权限是否足够？
+
+## 📝 开发指南
+
+### 添加新数据源
+
+1. 在 `config/data_sources.yaml` 中添加配置
+2. 创建新的 collector 类继承基础接口
+3. 在 `multi_source_collector.py` 中注册
+
+### 修改分析框架
+
+编辑 `config/codex_analysis_prompt.yaml`，修改：
+- 分析部分结构
+- 商业化路径维度
+- 评分标准
+
+### 自定义关键词
+
+编辑 `config/high_signal_keywords.yaml`：
+- 添加痛点信号词
+- 添加机会信号词
+- 配置噪音过滤词
+
+## 🔐 安全注意事项
+
+- **敏感文件**：`cookies.json`、`twitter_cookies.json` 已加入 `.gitignore`
+- **Token 管理**：不要将 `YUQUE_TOKEN` 提交到代码库
+- **定期更新**：Twitter cookies 会过期，需定期重新提取
+
+## 📈 性能数据
+
+- **数据采集速度**：约 46 条/分钟（Reddit + GitHub + HN）
+- **分析报告长度**：约 18,000 字符，~650 行
+- **语雀推送时间**：< 5 秒
+
+## 🤝 贡献指南
+
+本项目使用 Git 进行版本控制：
+
+```bash
+# 当前分支
+git branch
+# * feature/llm-upgrade
+
+# 提交更改
+git add .
+git commit -m "feat: description"
+
+# 推送到远程（需要配置认证）
+git push origin feature/llm-upgrade
 ```
 
----
+## 🌐 远程仓库
 
-## 🎯 最佳实践
-
-### 1. 定期审视关键词
-
-每周检查一次:
-- 哪些关键词产生了有价值的信息？
-- 哪些关键词产生了噪音？
-- 需要添加新的关键词吗？
-
-### 2. 建立反馈循环
-
-```
-发现机会 → 验证可行性 → 采取行动 → 记录结果 → 优化关键词
-```
-
-### 3. 去重和聚合
-
-系统已内置:
-- MD5内容指纹 (避免重复)
-- 语义相似度检测 (ChromaDB)
-- 时间窗口聚合 (24小时内只推送一次)
-
-### 4. 隐私保护
-
-- 所有数据存储在本地
-- 不上传个人信息到云端
-- 仅通过PushPlus推送摘要
-
----
-
-## 🔮 未来计划
-
-- [ ] 支持Reddit、Discord监控
-- [ ] 支持钉钉、Slack推送
-- [ ] 支持邮件推送
-- [ ] 支持本地LLM (Ollama)
-- [ ] 支持多语言分析
-- [ ] 支持Web界面
-- [ ] 支持实时仪表板
-
----
-
-## 📞 支持
-
-遇到问题？
-
-1. 检查 `README.md` 的故障排除部分
-2. 查看代码中的注释
-3. 检查日志文件 `monitor.log`
-4. 提交Issue (如果开源)
-
----
+- **GitHub**: https://github.com/electricmpv/market-monitor.git
+- **Gitea** (本地): http://localhost:3000
 
 ## 📄 许可证
 
-本项目仅供学习和个人使用。
+请根据项目需求添加适当的许可证。
 
-**免责声明**:
-- 请遵守各平台的ToS
-- 不要用于大规模爬取
-- 使用本工具产生的后果由使用者自行承担
+## 🆘 获取帮助
 
----
-
-## 🙏 致谢
-
-感谢以下开源项目:
-- [Twikit](https://github.com/d60/twikit) - Twitter API
-- [ChromaDB](https://www.trychroma.com/) - 向量数据库
-- [Google Generative AI](https://ai.google.dev/) - Gemini API
-- [python-docx](https://python-docx.readthedocs.io/) - Word生成
+- 查看日志：`tail -f /tmp/market-monitor.log`
+- 检查配置：`cat config/data_sources.yaml`
+- 测试单个采集器：`python3 data_collectors/reddit_collector.py`
 
 ---
 
-**Happy Hunting! 🚀**
-
-*最后更新: 2026-01-22*
+**最后更新**：2026年2月3日
+**版本**：v5.0 (Multi-source + Deep Analysis)
