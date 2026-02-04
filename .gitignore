@@ -3,10 +3,30 @@
 .env.local
 .env.*.local
 
+# 个人档案（包含敏感信息）
+USER.md
+CLAUDE.md
+
 # 敏感认证文件
 cookies.json
 twitter_cookies.json
 *.cookies.json
+
+# Bird CLI 配置（包含 Twitter tokens）
+.config/bird/
+
+# Codex CLI 配置
+.codex/
+.config/codex/
+
+# 临时分析文件（可能包含敏感数据）
+/tmp/codex_*.md
+/tmp/market_data_*.json
+/tmp/*_prompt.txt
+/tmp/yuque_report_*.md
+/tmp/twitter_*.json
+/tmp/twitter_*.html
+/tmp/parsed_*.json
 
 # Python
 __pycache__/

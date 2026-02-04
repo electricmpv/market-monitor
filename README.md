@@ -1,327 +1,420 @@
-# 🎯 AI Market Monitor - 市场机会监控系统
+# 🎯 AI Market Monitor
 
-> 多源数据采集 + 深度CODEX分析 + 自动推送语雀
+> 🤖 智能化的 AI 市场机会监控系统 - 自动采集、深度分析、智能推送
 
-## 📋 项目概览
+[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Bird CLI](https://img.shields.io/badge/Twitter-Bird%20CLI-1DA1F2.svg)](https://github.com/steipete/bird)
+[![Codex](https://img.shields.io/badge/AI-Codex%20CLI-purple.svg)](https://codex.sh)
 
-AI Market Monitor 是一个自动化市场机会监控系统，从多个数据源采集 AI/技术领域的市场信号，使用深度分析框架进行 CODEX 分析，并自动生成专业的市场分析报告推送到语雀知识库。
+## 📖 项目简介
 
-### 核心特性
+AI Market Monitor 是一个全自动的市场机会监控系统，专注于 AI 领域的市场洞察。系统通过多源数据采集、AI 深度分析和自动报告生成，帮助独立开发者和小团队快速发现市场机会。
 
-- **🌐 多源数据采集**：Twitter/X、Reddit、GitHub Trending、Hacker News
-- **🧠 深度分析框架**：10 部分结构化分析，包含行业定位、用户画像、商业化路径、超级个人适配度评分
-- **📊 高质量筛选**：173+ 关键词、53 位高质量影响者、智能信噪比评分
-- **📤 自动发布**：一键推送到语雀知识库
-- **⏰ 定时执行**：支持 cron 定时任务
+### 🌟 核心特性
 
-## 🚀 快速开始
+- ✅ **多源数据采集**
+  - 🐦 Twitter/X（使用 [Bird CLI](https://github.com/steipete/bird)）
+  - 📱 Reddit（技术社区热门讨论）
+  - 🐙 GitHub Trending（趋势项目）
+  - 📰 Hacker News（社区热门）
 
-### 一键执行完整工作流
+- ✅ **智能分析引擎**
+  - 🧠 集成 Codex CLI（GPT-4/o3）
+  - 📊 多维度市场洞察
+  - 💡 机会评分与可行性分析
+  - 🎯 用户痛点深度挖掘
 
-```bash
-# 激活虚拟环境
-source venv/bin/activate
+- ✅ **自动化工作流**
+  - ⏰ 定时任务支持（cron）
+  - 📄 自动生成精美报告
+  - 🔗 一键推送到语雀知识库
+  - 📧 支持多渠道通知
 
-# 执行完整工作流：采集 → 分析 → 推送语雀
-python3 run_complete_workflow.py
-```
+### 🎨 报告示例
 
-### 单独运行各模块
+生成的报告包含：
+- **核心发现**：TOP 3 市场洞察（带评分）
+- **用户痛点分析**：按产品/领域分类，标注严重程度
+- **市场机会识别**：4+ 个可执行机会方向（含 MVP 路线图）
+- **技术趋势追踪**：GitHub 项目推荐和技术栈分析
+- **多视角点评**：产品经理、技术专家、投资人三重视角
 
-```bash
-# 1. 仅数据采集
-python3 multi_source_collector.py
-
-# 2. 采集 + CODEX 分析（不推送）
-python3 run_codex_workflow.py
-
-# 3. 推送已有报告到语雀
-python3 push_deep_report_to_yuque.py /path/to/report.md
-```
-
-## 📁 项目结构
-
-```
-market-monitor/
-├── config/                          # 配置文件
-│   ├── data_sources.yaml           # 数据源配置（8个平台）
-│   ├── high_signal_keywords.yaml   # 高信噪比关键词（173+）
-│   ├── influencers.yaml            # 影响者名单（53位）
-│   └── codex_analysis_prompt.yaml  # CODEX 深度分析提示词
-│
-├── data_collectors/                 # 数据采集器
-│   ├── twitter_collector.py        # Twitter/X 采集
-│   ├── reddit_collector.py         # Reddit 采集（RSS模式）
-│   └── github_collector.py         # GitHub Trending 采集
-│
-├── enhanced_config_loader.py       # 统一配置加载器
-├── multi_source_collector.py       # 多源数据采集管理器
-├── run_complete_workflow.py        # 完整工作流入口
-├── push_deep_report_to_yuque.py   # 语雀推送工具
-│
-├── extract_twitter_cookies_from_chrome.py  # Cookie 提取工具
-├── setup_twitter_cookies.py               # Twitter 登录设置
-├── setup_cron.sh                          # 定时任务配置脚本
-│
-└── README.md                       # 本文档
-```
-
-## ⚙️ 环境配置
-
-### 1. Python 环境
-
-```bash
-# 激活虚拟环境（已存在）
-source venv/bin/activate
-
-# 已安装依赖
-# twikit, praw, requests, beautifulsoup4, pyyaml, lxml
-```
-
-### 2. Twitter 认证配置
-
-**方式一：从 Chrome 提取 Cookies（推荐）**
-
-```bash
-# 确保 Chrome 已登录 Twitter
-python3 extract_twitter_cookies_from_chrome.py
-```
-
-**方式二：交互式登录**
-
-```bash
-python3 setup_twitter_cookies.py
-```
-
-提取的 cookies 会保存到 `twitter_cookies.json`（已加入 .gitignore）。
-
-### 3. 语雀配置
-
-环境变量或代码中配置：
-
-```bash
-export YUQUE_TOKEN="your_token_here"
-export YUQUE_NAMESPACE="diandongmianbao"
-export YUQUE_REPO_SLUG="cg40cd"
-```
-
-当前配置推送到：`https://www.yuque.com/diandongmianbao/cg40cd`
-
-## 📊 数据源配置
-
-### 当前监控的数据源
-
-| 平台 | 类型 | 覆盖范围 | 权重 |
-|------|------|----------|------|
-| **Twitter/X** | 社交媒体 | AI 领域 KOL 动态 | 高 |
-| **Reddit** | 社区论坛 | 18 个高优先级 subreddit | 高 |
-| **GitHub Trending** | 开源项目 | Python/JavaScript/TypeScript/Rust | 中 |
-| **Hacker News** | 技术新闻 | Top Stories | 中 |
-| **Product Hunt** | 产品发布 | 新产品发现 | 待实现 |
-
-### Reddit 高优先级 Subreddits
-
-```
-- r/ChatGPT (热度: 极高)
-- r/LocalLLaMA (信噪比: 极高)
-- r/OpenAI (官方动态)
-- r/MachineLearning (技术深度)
-- r/SideProject (商业化机会)
-- ... 共 18 个
-```
-
-### 影响者监控（53 位）
-
-分类：
-- **AI 研究者**：Andrej Karpathy、Yann LeCun、Andrew Ng 等
-- **科技创始人**：Sam Altman、Dario Amodei、Elon Musk 等
-- **独立开发者**：Pieter Levels、Marc Louvion、Tony Dinh 等
-- **投资人/分析师**：Marc Andreessen、Elad Gil 等
-
-## 🧠 深度分析框架
-
-### 10 部分分析结构
-
-1. **核心发现**：紧急度评级、市场信号解读
-2. **用户痛点分析**：痛点分类矩阵、深度剖析
-3. **市场机会识别**：
-   - 行业定位
-   - 用户画像
-   - 7 维度商业化路径对比（SaaS、API、一次性部署、开源+企业版等）
-   - 8 维度超级个人适配度评分
-   - MVP 建议与 ARR 预估
-4. **技术趋势追踪**
-5. **融资/项目动态**
-6. **数据统计洞察**
-7. **AI 分析师多视角点评**
-8. **行动建议优先级矩阵**
-9. **数据来源**
-10. **未来展望**
-
-### 商业化路径 7 维度对比
-
-| 模式 | 定价策略 | 预估 ARR | 启动成本 | 获客难度 | 现金流周期 | 规模化潜力 | 适合人群 |
-|------|---------|---------|----------|----------|-----------|-----------|----------|
-| SaaS订阅 | ... | ... | ... | ... | ... | ... | ... |
-
-### 超级个人适配度 8 维度评分
-
-| 维度 | 评分 | 说明 |
-|------|------|------|
-| 技术门槛 | X/10 | ... |
-| 初始资金 | X/10 | ... |
-| 时间投入 | X/10 | ... |
-| 运营复杂度 | X/10 | ... |
-| 市场验证速度 | X/10 | ... |
-| 规模化难度 | X/10 | ... |
-| 竞争壁垒 | X/10 | ... |
-| 现金流健康 | X/10 | ... |
-| **综合评分** | **X/10** | 推荐等级 |
-
-## ⏰ 定时执行配置
-
-### 使用 Cron
-
-```bash
-# 运行配置脚本（交互式）
-bash setup_cron.sh
-
-# 或手动添加
-crontab -e
-
-# 添加以下行（每天 9:00 和 15:00 执行）
-0 9 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_complete_workflow.py >> /tmp/market-monitor.log 2>&1
-0 15 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_complete_workflow.py >> /tmp/market-monitor.log 2>&1
-```
-
-### 查看日志
-
-```bash
-# 实时查看
-tail -f /tmp/market-monitor.log
-
-# 查看最近 100 行
-tail -100 /tmp/market-monitor.log
-```
-
-## 🔧 故障排查
-
-### Twitter 采集失败
-
-**问题**：twikit 库报错 "'ClientTransaction' object has no attribute 'key'"
-
-**解决方案**：
-1. 重新提取 Chrome cookies：`python3 extract_twitter_cookies_from_chrome.py`
-2. 确保 Chrome 已登录 Twitter 且会话有效
-3. 如果仍失败，使用 Reddit、GitHub、HN 作为主要数据源
-
-### 报告质量不佳
-
-**检查点**：
-- 是否使用了 `run_complete_workflow.py`？
-- 配置文件 `config/codex_analysis_prompt.yaml` 是否存在？
-- 查看生成的报告是否包含 10 个部分？
-
-### 语雀推送失败
-
-**检查点**：
-- `YUQUE_TOKEN` 是否正确？
-- 网络连接是否正常？
-- 知识库权限是否足够？
-
-## 📝 开发指南
-
-### 添加新数据源
-
-1. 在 `config/data_sources.yaml` 中添加配置
-2. 创建新的 collector 类继承基础接口
-3. 在 `multi_source_collector.py` 中注册
-
-### 修改分析框架
-
-编辑 `config/codex_analysis_prompt.yaml`，修改：
-- 分析部分结构
-- 商业化路径维度
-- 评分标准
-
-### 自定义关键词
-
-编辑 `config/high_signal_keywords.yaml`：
-- 添加痛点信号词
-- 添加机会信号词
-- 配置噪音过滤词
-
-## 🔐 安全注意事项
-
-- **敏感文件**：`cookies.json`、`twitter_cookies.json` 已加入 `.gitignore`
-- **Token 管理**：不要将 `YUQUE_TOKEN` 提交到代码库
-- **定期更新**：Twitter cookies 会过期，需定期重新提取
-
-## 📈 性能数据
-
-- **数据采集速度**：约 46 条/分钟（Reddit + GitHub + HN）
-- **分析报告长度**：约 18,000 字符，~650 行
-- **语雀推送时间**：< 5 秒
-
-## 🤝 贡献指南
-
-本项目使用 Git 进行版本控制：
-
-```bash
-# 当前分支
-git branch
-# * feature/llm-upgrade
-
-# 提交更改
-git add .
-git commit -m "feat: description"
-
-# 推送到远程（需要配置认证）
-git push origin feature/llm-upgrade
-```
-
-## 🌐 远程仓库
-
-### GitHub（云端备份）
-
-```bash
-# 推送到 GitHub（需要配置认证）
-# 方式1：SSH Key（推荐）
-git remote set-url origin git@github.com:electricmpv/market-monitor.git
-git push origin feature/llm-upgrade
-
-# 方式2：Personal Access Token
-# 1. 访问 https://github.com/settings/tokens
-# 2. 生成 token（repo权限）
-# 3. 推送时使用：
-git push https://YOUR_TOKEN@github.com/electricmpv/market-monitor.git feature/llm-upgrade
-```
-
-### Gitea（本地备份）
-
-```bash
-# 推送到本地 Gitea
-git push gitea feature/llm-upgrade
-
-# 查看 Gitea 仓库
-# http://localhost:3000/git01/market-monitor
-```
-
-**重要**：建议同时推送到 GitHub 和 Gitea：
-- GitHub：云端备份，防止服务器故障
-- Gitea：本地快速访问
-
-## 📄 许可证
-
-请根据项目需求添加适当的许可证。
-
-## 🆘 获取帮助
-
-- 查看日志：`tail -f /tmp/market-monitor.log`
-- 检查配置：`cat config/data_sources.yaml`
-- 测试单个采集器：`python3 data_collectors/reddit_collector.py`
+📍 **示例报告**：[查看最新报告](https://www.yuque.com/diandongmianbao/cg40cd)
 
 ---
 
-**最后更新**：2026年2月3日
-**版本**：v5.0 (Multi-source + Deep Analysis)
+## 🚀 快速开始
+
+### 前置要求
+
+- Python 3.11+
+- Node.js 16+（用于 Bird CLI）
+- Git
+- 已登录 Twitter 的浏览器（Chrome/Firefox）
+
+### 安装步骤
+
+#### 1. 克隆项目
+
+```bash
+git clone https://github.com/YOUR_USERNAME/market-monitor.git
+cd market-monitor
+```
+
+#### 2. 安装 Python 依赖
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+#### 3. 安装 Bird CLI（Twitter 采集工具）
+
+```bash
+npm install -g @steipete/bird
+```
+
+#### 4. 安装 browser-use（可选，用于提取 cookies）
+
+```bash
+pip install "browser-use[cli]"
+browser-use install
+```
+
+#### 5. 配置环境变量
+
+```bash
+cp .env.example .env
+# 编辑 .env 文件，填入你的配置
+```
+
+**必需配置**：
+
+```env
+# Twitter Bird CLI 认证
+AUTH_TOKEN=your_twitter_auth_token
+CT0=your_twitter_ct0_token
+
+# 语雀 API（用于报告推送）
+YUQUE_TOKEN=your_yuque_token
+YUQUE_NAMESPACE=your_namespace
+YUQUE_REPO_SLUG=your_repo_slug
+```
+
+#### 6. 提取 Twitter Cookies
+
+使用 browser-use 自动提取（推荐）：
+
+```bash
+# 确保 Chrome 已登录 Twitter
+source venv/bin/activate
+browser-use --browser real open https://x.com
+browser-use cookies get --url https://x.com
+```
+
+从输出中找到 `auth_token` 和 `ct0` 两个值，复制到 `.env` 文件。
+
+---
+
+## 📚 使用方法
+
+### 方式一：一键执行（推荐）
+
+运行完整工作流（采集 → 分析 → 推送）：
+
+```bash
+source venv/bin/activate
+python3 run_workflow.py
+```
+
+### 方式二：分步执行
+
+#### 1. 数据采集
+
+```bash
+python3 multi_source_collector.py
+```
+
+输出：`/tmp/market_data_YYYYMMDD_HHMMSS.json`
+
+#### 2. Codex 分析（需要 Codex CLI）
+
+```bash
+# 安装 Codex CLI（如果未安装）
+# 参考：https://codex.sh
+
+python3 /tmp/run_codex_analysis.py
+```
+
+输出：`/tmp/codex_analysis.md`
+
+#### 3. 推送到语雀
+
+```bash
+python3 /tmp/push_to_yuque.py
+```
+
+### 方式三：定时任务
+
+设置每日自动执行（9:00 和 15:00）：
+
+```bash
+bash setup_cron.sh
+```
+
+或手动配置 crontab：
+
+```bash
+crontab -e
+```
+
+添加：
+
+```cron
+0 9 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_workflow.py >> /tmp/market-monitor.log 2>&1
+0 15 * * * cd /home/git01/market-monitor && source venv/bin/activate && python3 run_workflow.py >> /tmp/market-monitor.log 2>&1
+```
+
+---
+
+## 🔧 配置说明
+
+### 数据源配置
+
+#### Twitter/X（Bird CLI）
+
+- **优点**：快速、稳定、无需 API Key
+- **限制**：仅用于只读操作，不要发推文
+- **配置**：需要 `AUTH_TOKEN` 和 `CT0` cookies
+
+#### Reddit
+
+- **当前模式**：公共 RSS Feed（无需认证）
+- **可选**：配置 Reddit API 获取更多数据
+
+#### GitHub Trending
+
+- **模式**：公开 API（无需认证）
+- **采集**：Python、TypeScript、JavaScript 趋势项目
+
+#### Hacker News
+
+- **模式**：Official API（无需认证）
+- **采集**：热门故事和评论
+
+### 关键词与博主配置
+
+#### 高信噪比关键词
+
+编辑 `config/high_signal_keywords.yaml`：
+
+```yaml
+strong_pain_signals:
+  frustration:
+    - "so frustrating"
+    - "driving me crazy"
+  unmet_needs:
+    - "looking for alternative"
+    - "need something that"
+```
+
+#### 高质量博主列表
+
+编辑 `config/influencers.yaml`：
+
+```yaml
+ai_researchers:
+  - name: "Andrej Karpathy"
+    twitter: "@karpathy"
+    priority: "high"
+```
+
+---
+
+## 📂 项目结构
+
+```
+market-monitor/
+├── config/                      # 配置文件
+│   ├── data_sources.yaml       # 数据源配置
+│   ├── influencers.yaml        # 博主列表
+│   ├── high_signal_keywords.yaml  # 高信噪比关键词
+│   └── codex_analysis_prompt.yaml # Codex 提示词模板
+│
+├── data_collectors/            # 数据采集器
+│   ├── __init__.py
+│   ├── twitter_bird_collector.py  # Twitter（Bird CLI）
+│   ├── reddit_collector.py     # Reddit
+│   └── github_collector.py     # GitHub
+│
+├── multi_source_collector.py   # 多源采集管理器
+├── run_workflow.py             # 完整工作流入口
+├── enhanced_config_loader.py   # 配置加载器
+├── yuque_report_generator.py   # 语雀报告生成器
+├── push_deep_report_to_yuque.py # 语雀推送工具
+│
+├── requirements.txt            # Python 依赖
+├── .env.example               # 环境变量模板
+├── .gitignore                 # Git 忽略规则
+├── README.md                  # 项目说明（本文件）
+├── USAGE_GUIDE.md            # 详细使用指南
+└── setup_cron.sh              # Cron 配置脚本
+```
+
+---
+
+## 🛠️ 技术栈
+
+### 数据采集
+
+- **Bird CLI** - Twitter/X 数据采集
+- **PRAW** - Reddit API
+- **BeautifulSoup4** - HTML 解析
+- **Requests** - HTTP 客户端
+
+### 分析引擎
+
+- **Codex CLI** - AI 深度分析
+- **GPT-4 / o3** - 大语言模型
+
+### 自动化
+
+- **Python 3.11+**
+- **Cron** - 定时任务
+- **dotenv** - 环境变量管理
+
+### 推送与通知
+
+- **语雀 API** - 知识库推送
+- **Markdown** - 报告格式
+
+---
+
+## 📊 数据采集说明
+
+### Twitter 采集（Bird CLI）
+
+Bird CLI 是一个快速、安全的 X/Twitter CLI 工具：
+
+- ✅ **优势**：
+  - 99.8% 可靠性（官方测试）
+  - 无需 API Key
+  - 使用浏览器 cookies 认证
+  - JSON 输出，易于解析
+
+- ⚠️ **注意事项**：
+  - **仅用于只读操作**（搜索、读取时间线）
+  - **不要用于发推文**（有封号风险）
+  - Cookie 需定期更新
+
+- 📚 **相关资源**：
+  - [Bird GitHub](https://github.com/steipete/bird)
+  - [Bird 文档](https://bird.fast/)
+
+### 采集策略
+
+#### 关键词搜索
+
+系统使用高信噪比关键词：
+- 痛点信号：`ChatGPT expensive`, `ChatGPT slow`
+- 需求信号：`need AI tool`, `looking for alternative`
+- 质量信号：`ChatGPT hallucination`
+
+#### 博主监控
+
+关注 AI 领域高质量博主：
+- AI 研究者（Karpathy、LeCun、Andrew Ng 等）
+- 开发者工具专家
+- AI 创业者
+
+---
+
+## 🤝 贡献指南
+
+欢迎贡献！请遵循以下步骤：
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+### 贡献方向
+
+- 🔹 添加新的数据源
+- 🔹 优化 Codex 分析提示词
+- 🔹 改进报告格式
+- 🔹 添加新的通知渠道
+- 🔹 提升采集效率
+
+---
+
+## 📝 更新日志
+
+### v2.0.0 (2026-02-04)
+
+- ✨ **重大更新**：使用 Bird CLI 替换 twikit
+- ✨ 新增：Codex CLI 深度分析集成
+- ✨ 新增：语雀知识库自动推送
+- ✨ 新增：高信噪比关键词配置
+- ✨ 新增：完整的使用指南文档
+- 🐛 修复：Twitter 采集稳定性问题
+- 🎨 优化：报告格式和可读性
+
+### v1.0.0
+
+- 🎉 初始版本发布
+
+---
+
+## ❓ 常见问题
+
+### Q: Bird CLI 提示 "Missing credentials"？
+
+A: 确保 `.env` 文件中配置了 `AUTH_TOKEN` 和 `CT0`。可以使用 browser-use 工具从浏览器中提取。
+
+### Q: Codex 分析失败？
+
+A: 检查 Codex CLI 是否正确安装和配置。某些模型（如 o3）需要特定的账户类型。
+
+### Q: 语雀推送失败？
+
+A: 检查 `YUQUE_TOKEN`、`YUQUE_NAMESPACE` 和 `YUQUE_REPO_SLUG` 是否正确配置。
+
+### Q: Twitter 账号会被封吗？
+
+A: Bird CLI 仅用于只读操作（搜索、读取），风险极低。**不要使用它发推文**。
+
+---
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+
+---
+
+## 🙏 致谢
+
+- [Bird CLI](https://github.com/steipete/bird) - 优秀的 Twitter CLI 工具
+- [Codex CLI](https://codex.sh) - 强大的 AI 分析引擎
+- [语雀](https://www.yuque.com) - 知识库平台
+
+---
+
+## 📧 联系方式
+
+- **作者**：电动面包
+- **GitHub**：[@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
+- **问题反馈**：[GitHub Issues](https://github.com/YOUR_USERNAME/market-monitor/issues)
+
+---
+
+<div align="center">
+
+**⭐ 如果这个项目对你有帮助，请给一个 Star！⭐**
+
+Made with ❤️ by 电动面包
+
+</div>

@@ -40,14 +40,14 @@ class MultiSourceCollector:
             'hackernews': []
         }
 
-    async def collect_all(self):
+    def collect_all(self):
         """采集所有数据源"""
         print("\n" + "="*60)
         print("🚀 开始多数据源采集")
         print("="*60 + "\n")
 
         # 1. Twitter
-        await self._collect_twitter()
+        self._collect_twitter()
 
         # 2. Reddit
         self._collect_reddit()
@@ -70,13 +70,13 @@ class MultiSourceCollector:
 
         return self.results
 
-    async def _collect_twitter(self):
+    def _collect_twitter(self):
         """采集 Twitter 数据"""
         print("📱 [1/4] 采集 Twitter/X 数据...")
 
         try:
-            # 初始化
-            if not await self.twitter.initialize():
+            # 初始化（bird采集器是同步的）
+            if not self.twitter.initialize():
                 print("  ⚠️  Twitter 采集器初始化失败，跳过")
                 return
 
@@ -93,7 +93,7 @@ class MultiSourceCollector:
                 keywords.extend(words[:3])  # 每个类别取前3个
 
             if keywords:
-                tweets = await self.twitter.collect_by_keywords(keywords[:5], max_results=5)
+                tweets = self.twitter.collect_by_keywords(keywords[:5], max_results=5)
                 self.results['twitter'].extend(tweets)
 
             # 方式2: 监控 Influencers
@@ -105,7 +105,7 @@ class MultiSourceCollector:
             ]
 
             if usernames:
-                user_tweets = await self.twitter.collect_from_users(usernames, max_tweets=3)
+                user_tweets = self.twitter.collect_from_users(usernames, max_tweets=3)
                 self.results['twitter'].extend(user_tweets)
 
             print(f"  ✅ Twitter 采集完成: {len(self.results['twitter'])} 条\n")
@@ -237,13 +237,13 @@ class MultiSourceCollector:
         return summary
 
 
-async def main():
+def main():
     """主函数"""
     # 创建采集器
     collector = MultiSourceCollector()
 
     # 采集所有数据
-    results = await collector.collect_all()
+    results = collector.collect_all()
 
     # 保存结果
     output_file = collector.save_results()
@@ -260,4 +260,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
